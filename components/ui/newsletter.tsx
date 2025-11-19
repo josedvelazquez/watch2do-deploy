@@ -1,9 +1,18 @@
 import { Button } from "./button"
+import Image from "next/image"
 
 export function Newsletter() {
     return (
-        <section className="py-24 bg-zinc-900 border-t border-white/10">
-            <div className="container mx-auto px-4 text-center">
+        <section className="relative py-24 bg-zinc-900 border-t border-white/10 overflow-hidden">
+            <div className="absolute inset-0 z-0">
+                <Image
+                    src="/images/relo-hombre.jpg"
+                    alt="Watchmaking Workshop"
+                    fill
+                    className="object-cover brightness-[0.3]"
+                />
+            </div>
+            <div className="container mx-auto px-4 relative z-10 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Unirse al Club</h2>
                 <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
                     Suscríbete a nuestro boletín para recibir ofertas exclusivas, acceso temprano a nuevas colecciones y consejos de estilo directamente a tu bandeja de entrada.

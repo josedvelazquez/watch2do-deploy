@@ -5,11 +5,13 @@ import { ShoppingBag, Search, Menu, User, LogOut, LayoutDashboard } from "lucide
 import { Button } from "./button"
 import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
+import { useCart } from "@/context/cart-context"
 
 export function Navbar() {
     const [user, setUser] = useState<{ name: string } | null>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const { itemCount } = useCart();
 
     useEffect(() => {
         fetch("/api/auth/me")
@@ -50,6 +52,7 @@ export function Navbar() {
                 <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
                     <Link href="/" className="hover:text-[#D4AF37] transition-colors">Inicio</Link>
                     <Link href="/catalog" className="hover:text-[#D4AF37] transition-colors">Catálogo</Link>
+                    <Link href="/about" className="hover:text-[#D4AF37] transition-colors">Nosotros</Link>
                     <Link href="/contact" className="hover:text-[#D4AF37] transition-colors">Contacto</Link>
                 </nav>
 
@@ -90,8 +93,13 @@ export function Navbar() {
                         </Link>
                     )}
                     <Link href="/cart">
-                        <Button variant="ghost" size="icon" className="text-gray-300 hover:text-[#D4AF37] transition-colors">
+                        <Button variant="ghost" size="icon" className="relative text-gray-300 hover:text-[#D4AF37] transition-colors group">
                             <ShoppingBag className="h-5 w-5" />
+                            {itemCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-black text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    {itemCount}
+                                </span>
+                            )}
                         </Button>
                     </Link>
                     <Button variant="ghost" size="icon" className="md:hidden text-gray-300">

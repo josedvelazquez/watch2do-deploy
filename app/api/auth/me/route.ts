@@ -15,11 +15,15 @@ export async function GET() {
             return NextResponse.json({ user: null }, { status: 200 });
         }
 
-        const decoded = jwt.verify(token.value, JWT_SECRET) as { id: number, email: string, name: string };
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number; email: string; name: string };
+        if (!decoded.id && decoded.userId) {
+            decoded.id = decoded.userId;
+        }
+        const user = decoded as { id: number; email: string; name: string };
 
         try {
             // Try to fetch fresh user data
-            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email FROM users WHERE id = ?', [decoded.id]);
+            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email FROM users WHERE id = ?', [user.id]);
 
             if (users.length > 0) {
                 return NextResponse.json({ user: users[0] }, { status: 200 });
@@ -30,7 +34,7 @@ export async function GET() {
         }
 
         // Return decoded token data if DB query fails or returns no user (but token is valid)
-        return NextResponse.json({ user: decoded }, { status: 200 });
+        return NextResponse.json({ user: user }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ user: null }, { status: 200 });
     }
@@ -45,14 +49,18 @@ export async function PUT(request: Request) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const decoded = jwt.verify(token.value, JWT_SECRET) as { id: number };
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number };
+        if (!decoded.id && decoded.userId) {
+            decoded.id = decoded.userId;
+        }
+        const user = decoded as { id: number };
         const { name, email } = await request.json();
 
         if (!name || !email) {
             return NextResponse.json({ message: 'Name and email are required' }, { status: 400 });
         }
 
-        await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, decoded.id]);
+        await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, user.id]);
 
         return NextResponse.json({ message: 'Profile updated successfully', user: { name, email } }, { status: 200 });
     } catch (error) {

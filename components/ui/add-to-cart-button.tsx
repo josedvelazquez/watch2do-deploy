@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/cart-context";
 
 interface AddToCartButtonProps {
     productId: number;
@@ -14,6 +15,7 @@ interface AddToCartButtonProps {
 
 export function AddToCartButton({ productId, className, iconOnly = false }: AddToCartButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
+    const { updateCartCount } = useCart();
     const router = useRouter();
 
     const handleAddToCart = async (e: React.MouseEvent) => {
@@ -34,6 +36,7 @@ export function AddToCartButton({ productId, className, iconOnly = false }: AddT
             }
 
             if (res.ok) {
+                await updateCartCount();
                 router.push("/cart");
                 router.refresh();
             }

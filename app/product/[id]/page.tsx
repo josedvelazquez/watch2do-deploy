@@ -29,7 +29,7 @@ async function getWatch(id: string) {
         `, [id]);
         return rows[0] || null;
     } catch (error) {
-        console.warn("Database connection failed, using mock data:", error);
+        console.warn("Conexión fallida a la base de datos, usando datos simulados:", error);
         const watches = [
             { id: 1, name: "Chronos Silver", price: 1299, image: "/images/watch1.png", description: "A masterpiece of engineering, the Chronos Silver features a precision automatic movement housed in a surgical-grade stainless steel case.", category_name: "Men" },
             { id: 2, name: "Midnight Leather", price: 899, image: "/images/watch2.png", description: "Elegant and understated, the Midnight Leather combines a minimalist black dial with a premium genuine leather strap for ultimate comfort.", category_name: "Men" },

@@ -5,10 +5,11 @@ import Image from "next/image";
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
-import { Trash2, Loader2, Minus, Plus } from "lucide-react";
+import { Trash2, Loader2, Minus, Plus, ArrowLeft } from "lucide-react";
 import { Newsletter } from "@/components/ui/newsletter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/context/cart-context";
 
 interface CartItem {
     id: number;
@@ -24,6 +25,7 @@ export default function CartPage() {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
+    const { updateCartCount } = useCart();
 
     const fetchCart = async () => {
         try {
@@ -56,12 +58,14 @@ export default function CartPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ productId, quantity })
         });
+        await updateCartCount();
         fetchCart(); // Re-fetch to ensure sync
     };
 
     const removeItem = async (id: number) => {
         setItems(prev => prev.filter(item => item.id !== id));
         await fetch(`/api/cart?id=${id}`, { method: "DELETE" });
+        await updateCartCount();
         fetchCart();
     };
 
@@ -82,6 +86,9 @@ export default function CartPage() {
             <Navbar />
 
             <main className="flex-1 container mx-auto px-4 py-12">
+                <Link href="/catalog" className="inline-flex items-center text-gray-400 hover:text-primary mb-8 transition-colors">
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Seguir comprando
+                </Link>
                 <h1 className="text-4xl font-bold text-white mb-8">Tu Carrito de Compras</h1>
 
                 {items.length === 0 ? (

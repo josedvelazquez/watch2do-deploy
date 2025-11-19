@@ -13,8 +13,11 @@ async function getUser(request: Request) {
     if (!token) return null;
 
     try {
-        const decoded = jwt.verify(token.value, JWT_SECRET) as { id: number };
-        return decoded;
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number };
+        if (!decoded.id && decoded.userId) {
+            decoded.id = decoded.userId;
+        }
+        return decoded as { id: number };
     } catch (error) {
         return null;
     }

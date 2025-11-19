@@ -72,7 +72,7 @@ export default function ContactPage() {
                                         <div className="relative">
                                             <select
                                                 id="subject"
-                                                className="w-full bg-white/5 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none"
+                                                className="right-0 mt-2 w-48 bg-zinc-900 border border-white/10 rounded-md shadow-lg py-1 z-50"
                                             >
                                                 <option value="general">Consulta general</option>
                                                 <option value="support">Soporte técnico</option>
