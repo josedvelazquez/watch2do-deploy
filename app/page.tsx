@@ -1,0 +1,146 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Navbar } from "@/components/ui/navbar";
+import { Footer } from "@/components/ui/footer";
+import { Newsletter } from "@/components/ui/newsletter";
+import { AddToCartButton } from "@/components/ui/add-to-cart-button";
+
+import pool from "@/lib/db";
+import { RowDataPacket } from "mysql2";
+
+interface Watch extends RowDataPacket {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category_name: string;
+}
+
+async function getFeaturedWatches() {
+  try {
+    const [rows] = await pool.query<Watch[]>(`
+        SELECT w.*, c.name as category_name 
+        FROM watches w 
+        LEFT JOIN categories c ON w.category_id = c.id 
+        LIMIT 4
+    `);
+    return rows;
+  } catch (error) {
+    console.warn("Database connection failed, using mock data:", error);
+    return [
+      { id: 1, name: "Chronos Silver", price: 1299, image: "/images/watch1.png", category_name: "Men" },
+      { id: 2, name: "Midnight Leather", price: 899, image: "/images/watch2.png", category_name: "Men" },
+      { id: 3, name: "Rose Elegance", price: 1499, image: "/images/watch3.png", category_name: "Women" },
+      { id: 4, name: "Aviator Gold", price: 2100, image: "/images/hero.png", category_name: "Men" },
+    ] as Watch[];
+  }
+}
+
+export default async function Home() {
+  const featuredWatches = await getFeaturedWatches();
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <Navbar />
+
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative h-screen flex items-center">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/hero.png"
+              alt="Luxury Watch Hero"
+              fill
+              className="object-cover brightness-50"
+              priority
+            />
+          </div>
+          <div className="container mx-auto px-4 relative z-10 text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              Hora de lujo <br /> en tu muñeca
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl">
+              Descubre nuestra colección curada de relojes de lujo, diseñados para la precisión y la distinción.
+            </p>
+            <Button size="lg" className="text-lg px-8 py-6" asChild>
+              <Link href="/catalog">Ver colección</Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Featured Collection */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-end mb-12">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">Colección Destacada</h2>
+                <p className="text-gray-400">Relojes favoritos para el coleccionista.</p>
+              </div>
+              <Link href="/catalog" className="text-primary hover:text-primary/80 transition-colors">
+                Ver Todo &rarr;
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {featuredWatches.map((watch) => (
+                <Link key={watch.id} href={`/product/${watch.id}`} className="group h-full block">
+                  <Card className="border-white/5 bg-white/5 overflow-hidden hover:border-primary/50 transition-colors duration-300 h-full flex flex-col">
+                    <CardContent className="p-0 relative aspect-square">
+                      <Image
+                        src={watch.image}
+                        alt={watch.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </CardContent>
+                    <CardFooter className="flex flex-col items-start p-6 flex-1 justify-between">
+                      <div className="w-full">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors mb-1">{watch.name}</h3>
+                        <span className="text-primary font-bold block mb-4">${Number(watch.price).toLocaleString()}</span>
+                      </div>
+                      <div className="w-full flex justify-end">
+                        <AddToCartButton productId={watch.id} iconOnly />
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Value Proposition */}
+        <section className="py-24 bg-zinc-900/50 border-y border-white/5">
+          <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div className="space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+                💎
+              </div>
+              <h3 className="text-xl font-bold text-white">Materiales Premium</h3>
+              <p className="text-gray-400">Elaborado con cristal de zafiro, acero quirúrgico y cuero genuino.</p>
+            </div>
+            <div className="space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+                🛡️
+              </div>
+              <h3 className="text-xl font-bold text-white">Garantía de Vida</h3>
+              <p className="text-gray-400">Nos comprometemos con la calidad de nuestros relojes con una garantía completa.</p>
+            </div>
+            <div className="space-y-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+                🚚
+              </div>
+              <h3 className="text-xl font-bold text-white">Envío Gratis</h3>
+              <p className="text-gray-400">Envío gratis en todos los pedidos.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Newsletter />
+      <Footer />
+    </div>
+  );
+}

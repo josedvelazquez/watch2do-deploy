@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Chronos Silver",
+        "price": 1299.00,
+        "image": "/images/watch1.png",
+        "description": "A masterpiece of engineering, the Chronos Silver features a precision automatic movement housed in a surgical-grade stainless steel case.",
+        "category": "men"
+    },
+    {
+        "name": "Midnight Leather",
+        "price": 899.00,
+        "image": "/images/watch2.png",
+        "description": "Elegant and understated, the Midnight Leather combines a minimalist black dial with a premium genuine leather strap for ultimate comfort.",
+        "category": "men"
+    },
+    {
+        "name": "Rose Elegance",
+        "price": 1499.00,
+        "image": "/images/watch3.png",
+        "description": "Radiating sophistication, the Rose Elegance features 18k rose gold plating and a mother-of-pearl dial, perfect for formal occasions.",
+        "category": "women"
+    },
+    {
+        "name": "Aviator Gold",
+        "price": 2100.00,
+        "image": "/images/hero.png",
+        "description": "Inspired by aviation history, this timepiece offers dual-time functionality and a rugged yet luxurious gold finish.",
+        "category": "men"
+    },
+    {
+        "name": "Diver Pro",
+        "price": 1050.00,
+        "image": "/images/watch1.png",
+        "description": "Built for the depths, the Diver Pro is water-resistant to 300m and features a rotating bezel and luminescent markers.",
+        "category": "men"
+    },
+    {
+        "name": "Classic Minimalist",
+        "price": 750.00,
+        "image": "/images/watch2.png",
+        "description": "Less is more. The Classic Minimalist strips away the unnecessary to reveal the pure beauty of timekeeping.",
+        "category": "unisex"
+    },
+    {
+        "name": "Royal Oak Style",
+        "price": 3500.00,
+        "image": "/images/watch3.png",
+        "description": "An homage to iconic design, featuring an octagonal bezel and integrated bracelet for a sporty yet elegant look.",
+        "category": "men"
+    },
+    {
+        "name": "Ceramic White",
+        "price": 1800.00,
+        "image": "/images/watch1.png",
+        "description": "Crafted from high-tech ceramic, this watch is scratch-resistant, hypoallergenic, and incredibly lightweight.",
+        "category": "women"
+    }
+]

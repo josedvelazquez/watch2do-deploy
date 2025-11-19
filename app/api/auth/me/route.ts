@@ -1,0 +1,62 @@
+import { NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
+import pool from '@/lib/db';
+import { RowDataPacket } from 'mysql2';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+export async function GET() {
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('auth_token');
+
+        if (!token) {
+            return NextResponse.json({ user: null }, { status: 200 });
+        }
+
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id: number, email: string, name: string };
+
+        try {
+            // Try to fetch fresh user data
+            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email FROM users WHERE id = ?', [decoded.id]);
+
+            if (users.length > 0) {
+                return NextResponse.json({ user: users[0] }, { status: 200 });
+            }
+        } catch (dbError) {
+            console.error('Database fetch error in /api/auth/me:', dbError);
+            // Fallback to token data if DB fails
+        }
+
+        // Return decoded token data if DB query fails or returns no user (but token is valid)
+        return NextResponse.json({ user: decoded }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ user: null }, { status: 200 });
+    }
+}
+
+export async function PUT(request: Request) {
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('auth_token');
+
+        if (!token) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
+
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id: number };
+        const { name, email } = await request.json();
+
+        if (!name || !email) {
+            return NextResponse.json({ message: 'Name and email are required' }, { status: 400 });
+        }
+
+        await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, decoded.id]);
+
+        return NextResponse.json({ message: 'Profile updated successfully', user: { name, email } }, { status: 200 });
+    } catch (error) {
+        console.error('Update profile error:', error);
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    }
+}
