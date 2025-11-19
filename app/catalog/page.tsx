@@ -139,7 +139,6 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                 </div>
 
                 {/* Products Grid */}
-                {/* Products Grid */}
                 {watches.length === 0 ? (
                     <div className="text-center py-20">
                         <p className="text-gray-400 text-lg mb-6">No se encontraron productos que coincidan con tu búsqueda.</p>

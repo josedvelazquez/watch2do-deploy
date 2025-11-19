@@ -66,9 +66,9 @@ export function CatalogControls() {
                     onChange={handleSortChange}
                     className="w-full h-[50px] bg-white/5 border border-white/10 rounded-lg px-4 text-white hover:border-[#D4AF37] focus:outline-none focus:border-primary/50 appearance-none cursor-pointer"
                 >
-                    <option value="">Ordenar por</option>
-                    <option value="price_asc">Precio: Menor a Mayor</option>
-                    <option value="price_desc">Precio: Mayor a Menor</option>
+                    <option value="" className="bg-zinc-900 text-white">Ordenar por</option>
+                    <option value="price_asc" className="bg-zinc-900 text-white">Precio: Menor a Mayor</option>
+                    <option value="price_desc" className="bg-zinc-900 text-white">Precio: Mayor a Menor</option>
                 </select>
             </div>
         </div>

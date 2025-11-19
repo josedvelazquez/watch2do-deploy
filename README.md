@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Watch2Do - E-commerce de Relojes
 
-## Getting Started
+Aplicación de comercio electrónico moderna construida con Next.js 15, Tailwind CSS y MySQL.
 
-First, run the development server:
+## Requisitos Previos
+
+- [Node.js](https://nodejs.org/) (v18 o superior)
+- [MySQL](https://www.mysql.com/) (v8.0 o superior)
+- Git
+
+## Instalación
+
+1.  **Clonar el repositorio:**
+
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd watch2do
+    ```
+
+2.  **Instalar dependencias:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Configuración de la Base de Datos:**
+
+    a.  Accede a tu servidor MySQL y crea la base de datos:
+        ```sql
+        CREATE DATABASE watch2do;
+        ```
+
+    b.  Ejecuta los scripts SQL ubicados en la carpeta `database/` para crear las tablas necesarias. Puedes hacerlo desde la línea de comandos o usando una herramienta como Workbench/DBeaver. El orden recomendado es:
+
+        1.  `database/init.sql` (Crea tablas base, categorías y productos iniciales)
+        2.  `database/users.sql` (Crea tabla de usuarios)
+        3.  `database/cart.sql` (Crea tabla de carrito)
+
+        *Ejemplo por línea de comandos:*
+        ```bash
+        mysql -u tu_usuario -p watch2do < database/init.sql
+        mysql -u tu_usuario -p watch2do < database/users.sql
+        mysql -u tu_usuario -p watch2do < database/cart.sql
+        ```
+
+4.  **Variables de Entorno:**
+
+    Crea un archivo `.env.local` en la raíz del proyecto y configura tus credenciales de base de datos y clave secreta para JWT:
+
+    ```env
+    # Base de Datos
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=tu_contraseña
+    DB_NAME=watch2do
+
+    # Autenticación (JWT)
+    JWT_SECRET=tu_clave_secreta_super_segura
+    ```
+
+5.  **Poblar la Base de Datos (Opcional):**
+
+    Si deseas reiniciar o cargar más datos de prueba (relojes), puedes ejecutar el script de "semilla":
+
+    ```bash
+    npm run seed
+    ```
+
+## Ejecutar la Aplicación
+
+Inicia el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del Proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   `/app`: Rutas y páginas de Next.js (App Router).
+-   `/components`: Componentes reutilizables de UI (basados en Shadcn/ui).
+-   `/lib`: Utilidades y configuración de base de datos (`db.ts`).
+-   `/database`: Scripts SQL para la estructura de la BD.
+-   `/scripts`: Scripts de utilidad (seeding).
 
-## Learn More
+## Tecnologías
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-   **Framework**: Next.js 15
+-   **Estilos**: Tailwind CSS
+-   **Base de Datos**: MySQL (con `mysql2`)
+-   **Autenticación**: JWT (JSON Web Tokens) & Bcrypt
+-   **Iconos**: Lucide React
