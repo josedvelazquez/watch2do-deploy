@@ -58,7 +58,7 @@ export default async function Home() {
             />
           </div>
           <div className="container mx-auto px-4 relative z-10 text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white font-serif">
               Hora de lujo <br /> en tu muñeca
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl">

@@ -1,55 +1,82 @@
+"use client";
+
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
-import { Button } from "@/components/ui/button";
-import { Newsletter } from "@/components/ui/newsletter";
+import { useState } from "react";
+import { ShippingForm } from "@/components/checkout/shipping-form";
+import { PaymentMethodSelector } from "@/components/checkout/payment-method-selector";
+import { SecurityBadges } from "@/components/ui/security-badges";
+import { Check } from "lucide-react";
+
+type CheckoutStep = 'shipping' | 'payment';
 
 export default function CheckoutPage() {
+    const [step, setStep] = useState<CheckoutStep>('shipping');
+
     return (
         <div className="min-h-screen bg-background flex flex-col">
             <Navbar />
 
             <main className="flex-1 container mx-auto px-4 py-12">
-                <h1 className="text-4xl font-bold text-white mb-8 text-center">Verificación de Checkout</h1>
+                <div className="max-w-4xl mx-auto">
+                    {/* Progress Indicator */}
+                    {/* Progress Indicator */}
+                    <div className="flex items-center justify-center mb-12 relative">
+                        {/* Connecting Line Background */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-1 bg-zinc-800 rounded-full" />
 
-                <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div className="space-y-6">
-                        <h2 className="text-xl font-semibold text-white">Información de Envío</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Nombre" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                            <input type="text" placeholder="Apellido" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                        </div>
-                        <input type="email" placeholder="Email" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                        <input type="text" placeholder="Dirección" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                        <div className="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Ciudad" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                            <input type="text" placeholder="Código Postal" className="bg-white/5 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
+                        {/* Connecting Line Progress */}
+                        <div
+                            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1 bg-[#D4AF37] rounded-full transition-all duration-500 ease-out ${step === 'payment' ? 'w-48' : 'w-0'
+                                }`}
+                        />
+
+                        <div className="relative z-10 flex justify-between w-64">
+                            {/* Step 1 */}
+                            <div className="flex flex-col items-center gap-2">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step === 'shipping' || step === 'payment'
+                                        ? 'bg-[#D4AF37] text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-110'
+                                        : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
+                                    }`}>
+                                    {step === 'payment' ? <Check className="w-5 h-5" /> : '1'}
+                                </div>
+                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'shipping' ? 'text-[#D4AF37]' : 'text-zinc-500'
+                                    }`}>
+                                    Envío
+                                </span>
+                            </div>
+
+                            {/* Step 2 */}
+                            <div className="flex flex-col items-center gap-2">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step === 'payment'
+                                        ? 'bg-[#D4AF37] text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-110'
+                                        : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
+                                    }`}>
+                                    2
+                                </div>
+                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'payment' ? 'text-[#D4AF37]' : 'text-zinc-500'
+                                    }`}>
+                                    Pago
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <h2 className="text-xl font-semibold text-white">Detalles de Pago</h2>
-                        <div className="bg-white/5 p-6 rounded-lg border border-white/10 space-y-4">
-                            <input type="text" placeholder="Número de Tarjeta" className="bg-black/20 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                            <div className="grid grid-cols-2 gap-4">
-                                <input type="text" placeholder="MM/YY" className="bg-black/20 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                                <input type="text" placeholder="CVC" className="bg-black/20 border border-white/10 rounded px-4 py-3 text-white w-full focus:outline-none focus:border-primary" />
-                            </div>
-                        </div>
+                    {/* Step Content */}
+                    <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
+                        {step === 'shipping' && (
+                            <ShippingForm onContinue={() => setStep('payment')} />
+                        )}
 
-                        <div className="pt-4">
-                            <div className="flex justify-between text-lg font-bold text-white mb-6">
-                                <span> Total</span>
-                                <span className="text-primary">$2,373.84</span>
-                            </div>
-                            <Button className="w-full h-12 text-lg">
-                                Pagar Ahora
-                            </Button>
-                        </div>
+                        {step === 'payment' && (
+                            <PaymentMethodSelector onBack={() => setStep('shipping')} />
+                        )}
                     </div>
+                    {/* Security Badges */}
+                    <SecurityBadges />
                 </div>
             </main>
 
-            <Newsletter />
             <Footer />
         </div>
     );
