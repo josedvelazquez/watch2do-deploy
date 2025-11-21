@@ -6,7 +6,7 @@ import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Trash2, Loader2, Minus, Plus, ArrowLeft } from "lucide-react";
-import { Newsletter } from "@/components/ui/newsletter";
+import { RecommendedProducts } from "@/components/cart/recommended-products";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
@@ -25,7 +25,7 @@ export default function CartPage() {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
-    const { updateCartCount } = useCart();
+    const { updateCartCount, itemCount } = useCart();
 
     const fetchCart = async () => {
         try {
@@ -45,7 +45,7 @@ export default function CartPage() {
 
     useEffect(() => {
         fetchCart();
-    }, [router]);
+    }, [router, itemCount]);
 
     const updateQuantity = async (productId: number, quantity: number) => {
         // Optimistic update
@@ -174,8 +174,8 @@ export default function CartPage() {
                 )}
             </main>
 
-            <Newsletter />
+            <RecommendedProducts currentItems={items.map(i => ({ product_id: i.product_id, category_id: i.category_id }))} />
             <Footer />
-        </div>
+        </div >
     );
 }

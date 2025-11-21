@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
-import { Newsletter } from "@/components/ui/newsletter";
 
 export default function AboutPage() {
     return (
@@ -87,7 +86,6 @@ export default function AboutPage() {
                 </section>
             </main>
 
-            <Newsletter />
             <Footer />
         </div>
     );

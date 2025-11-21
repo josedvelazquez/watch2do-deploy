@@ -56,7 +56,7 @@ export function ShippingForm({ onContinue }: ShippingFormProps) {
             <div className="pt-4">
                 <Button
                     type="submit"
-                    className="w-full h-12 text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                    className="w-full h-12 text-lg font-medium bg-[#D4AF37] text-black hover:bg-[#B59530] transition-all"
                 >
                     Continuar al Pago
                 </Button>

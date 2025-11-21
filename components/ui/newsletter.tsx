@@ -13,18 +13,18 @@ export function Newsletter() {
                 />
             </div>
             <div className="container mx-auto px-4 relative z-10 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Unirse al Club</h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-serif text-white mb-4">Mantente al Día</h2>
                 <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-                    Suscríbete a nuestro boletín para recibir ofertas exclusivas, acceso temprano a nuevas colecciones y consejos de estilo directamente a tu bandeja de entrada.
+                    Suscríbete a nuestro newsletter y recibe ofertas exclusivas, nuevos lanzamientos y consejos de expertos en relojería.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                     <input
                         type="email"
                         placeholder="Introduce tu correo electrónico"
-                        className="flex-1 bg-white/5 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                        className="flex-1 bg-white/5 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all"
                     />
-                    <Button size="lg" className="w-full sm:w-auto">
+                    <Button size="lg" className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#B59530] text-white font-bold">
                         Suscribirse
                     </Button>
                 </div>
