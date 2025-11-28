@@ -91,3 +91,38 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 -   **Base de Datos**: MySQL (con `mysql2`)
 -   **Autenticación**: JWT (JSON Web Tokens) & Bcrypt
 -   **Iconos**: Lucide React
+
+## Características Principales
+
+### 🛍️ Experiencia de Compra
+-   **Catálogo de Productos**: Visualización de relojes con filtrado por categorías.
+-   **Carrito de Compras**: Gestión de estado global con `CartContext`. Persistencia y actualización en tiempo real.
+-   **Recomendaciones Inteligentes**: Carrusel de productos recomendados en el carrito basado en las categorías de los artículos seleccionados.
+-   **Checkout Optimizado**: Proceso de compra en pasos (Envío -> Pago) con validación de formularios e indicador de progreso visual.
+
+### 🎨 Sistema de Diseño (Dark Mode)
+-   **Paleta de Colores**:
+    -   Primario: Dorado (`#D4AF37`) - Usado en botones de acción, bordes activos y acentos.
+    -   Fondo: Oscuro (Zinc-900/950) - Para una estética premium y elegante.
+    -   Texto: Blanco/Gris claro para legibilidad sobre fondos oscuros.
+-   **Tipografía**: Uso de fuentes Serif para títulos (elegancia) y Sans-serif para cuerpo (legibilidad).
+-   **Componentes UI**: Botones, Inputs y Tarjetas estilizados consistentemente con efectos de hover y transiciones suaves.
+
+## API Endpoints
+
+### Productos & Recomendaciones
+-   `GET /api/products`: Obtiene el listado de productos.
+-   `GET /api/products/[id]`: Obtiene detalles de un producto específico.
+-   `GET /api/recommendations`: Obtiene productos recomendados basados en `category_ids` y `exclude_ids`.
+
+### Carrito & Checkout
+-   `GET /api/cart`: Obtiene los ítems del carrito actual.
+-   `POST /api/cart`: Agrega un ítem al carrito.
+-   `PUT /api/cart`: Actualiza la cantidad de un ítem.
+-   `DELETE /api/cart`: Elimina un ítem del carrito.
+
+### Autenticación
+-   `POST /api/auth/login`: Inicia sesión y devuelve token JWT.
+-   `POST /api/auth/register`: Registra un nuevo usuario.
+-   `POST /api/auth/logout`: Cierra sesión.
+

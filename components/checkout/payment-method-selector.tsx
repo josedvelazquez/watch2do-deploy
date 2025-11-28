@@ -6,9 +6,10 @@ import Image from "next/image";
 
 interface PaymentMethodSelectorProps {
     onBack: () => void;
+    onSelect: (method: string) => void;
 }
 
-export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
+export function PaymentMethodSelector({ onBack, onSelect }: PaymentMethodSelectorProps) {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="text-center space-y-2 mb-8">
@@ -36,12 +37,15 @@ export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
                         </p>
                         <div className="flex gap-2 mb-6">
                             {/* Placeholders for card logos */}
-                            <Image src="/images/payment-methods/Visa_Logo.png" alt="Visa" width={30} height={50} className="h-8 w-auto object-contain" />
+                            <Image src="/images/payment-methods/Visa_Logo.png" alt="Visa" width={30} height={30} className="h-8 w-auto object-contain" />
                             <Image src="/images/payment-methods/logo-Mastercard.png" alt="Mastercard" width={50} height={50} className="h-8 w-auto object-contain" />
                             <Image src="/images/payment-methods/american-express-logo.png" alt="American Express" width={50} height={50} className="h-8 w-auto object-contain" />
                         </div>
                     </div>
-                    <Button className="w-full bg-[#D4AF37] hover:bg-[#c5a028] text-black font-bold">
+                    <Button
+                        onClick={() => onSelect('card')}
+                        className="w-full bg-[#D4AF37] hover:bg-[#c5a028] text-black font-bold"
+                    >
                         Seleccionar
                     </Button>
                 </div>
@@ -66,7 +70,10 @@ export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
                             Procesamiento: 1-2 días hábiles
                         </div>
                     </div>
-                    <Button className="w-full bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold">
+                    <Button
+                        onClick={() => onSelect('transfer')}
+                        className="w-full bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold"
+                    >
                         Seleccionar
                     </Button>
                 </div>
@@ -81,7 +88,7 @@ export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
                     </div>
                     <h4 className="font-bold text-gray-900 mb-1">OXXO</h4>
                     <p className="text-xs text-gray-500 mb-4">Paga en efectivo en tienda</p>
-                    <Button variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
+                    <Button onClick={() => onSelect('oxxo')} variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
                 </div>
 
                 {/* Clip */}
@@ -91,7 +98,7 @@ export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
                     </div>
                     <h4 className="font-bold text-gray-900 mb-1">Clip</h4>
                     <p className="text-xs text-gray-500 mb-4">Pago rápido con terminal</p>
-                    <Button variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
+                    <Button onClick={() => onSelect('clip')} variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
                 </div>
 
                 {/* Kueski Pay */}
@@ -101,7 +108,7 @@ export function PaymentMethodSelector({ onBack }: PaymentMethodSelectorProps) {
                     </div>
                     <h4 className="font-bold text-gray-900 mb-1">Kueski Pay</h4>
                     <p className="text-xs text-gray-500 mb-4">Compra ahora, paga después</p>
-                    <Button variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
+                    <Button onClick={() => onSelect('kueski')} variant="outline" className="w-full text-xs h-8 border-gray-300 text-gray-700">Seleccionar</Button>
                 </div>
             </div>
 

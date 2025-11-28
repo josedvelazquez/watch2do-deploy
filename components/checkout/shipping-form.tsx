@@ -3,15 +3,39 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
+
+export interface ShippingData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    address: string;
+    city: string;
+    zip: string;
+}
 
 interface ShippingFormProps {
-    onContinue: () => void;
+    onContinue: (data: ShippingData) => void;
 }
 
 export function ShippingForm({ onContinue }: ShippingFormProps) {
+    const [formData, setFormData] = useState<ShippingData>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: '',
+        city: '',
+        zip: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({ ...prev, [id]: value }));
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onContinue();
+        onContinue(formData);
     };
 
     return (
@@ -24,32 +48,32 @@ export function ShippingForm({ onContinue }: ShippingFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <Label htmlFor="firstName">Nombre</Label>
-                    <Input id="firstName" className="bg-white/5 border-white/10" required />
+                    <Input id="firstName" value={formData.firstName} onChange={handleChange} className="bg-white/5 border-white/10" required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="lastName">Apellido</Label>
-                    <Input id="lastName" className="bg-white/5 border-white/10" required />
+                    <Input id="lastName" value={formData.lastName} onChange={handleChange} className="bg-white/5 border-white/10" required />
                 </div>
             </div>
 
             <div className="space-y-2">
                 <Label htmlFor="email">Correo Electrónico</Label>
-                <Input id="email" type="email" className="bg-white/5 border-white/10" required />
+                <Input id="email" type="email" value={formData.email} onChange={handleChange} className="bg-white/5 border-white/10" required />
             </div>
 
             <div className="space-y-2">
                 <Label htmlFor="address">Dirección</Label>
-                <Input id="address" className="bg-white/5 border-white/10" required />
+                <Input id="address" value={formData.address} onChange={handleChange} className="bg-white/5 border-white/10" required />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <Label htmlFor="city">Ciudad</Label>
-                    <Input id="city" className="bg-white/5 border-white/10" required />
+                    <Input id="city" value={formData.city} onChange={handleChange} className="bg-white/5 border-white/10" required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="zip">Código Postal</Label>
-                    <Input id="zip" className="bg-white/5 border-white/10" required />
+                    <Input id="zip" value={formData.zip} onChange={handleChange} className="bg-white/5 border-white/10" required />
                 </div>
             </div>
 

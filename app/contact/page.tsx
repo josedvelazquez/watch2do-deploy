@@ -48,7 +48,7 @@ export default function ContactPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
+                                        <label htmlFor="email" className="text-sm font-medium text-gray-300">Correo electrónico</label>
                                         <input
                                             id="email"
                                             type="email"
