@@ -39,6 +39,12 @@ export default function CheckoutPage() {
         fetchCart();
     }, []);
 
+    useEffect(() => {
+        if (step === 'success') {
+            window.scrollTo(0, 0);
+        }
+    }, [step]);
+
     const totalAmount = cartItems.reduce((acc, item) => acc + (Number(item.price) * item.quantity), 0);
 
     const handleShippingSubmit = (data: ShippingData) => {

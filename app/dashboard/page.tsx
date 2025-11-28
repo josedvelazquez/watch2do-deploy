@@ -4,31 +4,66 @@ import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { User, Package, LogOut, Loader2, Edit, Save, X } from "lucide-react";
+import { User, Package, LogOut, Loader2, Edit, Save, X, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+interface OrderItem {
+    id: number;
+    quantity: number;
+    price: string;
+    name: string;
+    image: string;
+}
+
+interface Order {
+    id: number;
+    total: string;
+    status: string;
+    created_at: string;
+    payment_method: string;
+    items: OrderItem[];
+}
 
 export default function DashboardPage() {
     const router = useRouter();
     const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({ name: "", email: "" });
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        fetch("/api/auth/me")
-            .then(res => res.json())
-            .then(data => {
-                if (data.user) {
-                    setUser(data.user);
-                    setEditForm({ name: data.user.name, email: data.user.email });
+        const fetchData = async () => {
+            try {
+                // Fetch User
+                const authRes = await fetch("/api/auth/me");
+                const authData = await authRes.json();
+
+                if (authData.user) {
+                    setUser(authData.user);
+                    setEditForm({ name: authData.user.name, email: authData.user.email });
+
+                    // Fetch Orders
+                    const ordersRes = await fetch("/api/orders");
+                    if (ordersRes.ok) {
+                        const ordersData = await ordersRes.json();
+                        setOrders(ordersData.orders || []);
+                    }
                 } else {
                     router.push("/login");
                 }
-            })
-            .catch(() => router.push("/login"))
-            .finally(() => setIsLoading(false));
+            } catch (error) {
+                console.error("Dashboard data fetch error", error);
+                router.push("/login");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
     }, [router]);
 
     const handleLogout = async () => {
@@ -54,6 +89,24 @@ export default function DashboardPage() {
             console.error("Failed to update profile", error);
         } finally {
             setIsSaving(false);
+        }
+    };
+
+    const getStatusIcon = (status: string) => {
+        switch (status) {
+            case 'completed': return <CheckCircle className="h-4 w-4 text-green-500" />;
+            case 'pending': return <Clock className="h-4 w-4 text-yellow-500" />;
+            case 'cancelled': return <AlertCircle className="h-4 w-4 text-red-500" />;
+            default: return <Clock className="h-4 w-4 text-gray-500" />;
+        }
+    };
+
+    const getStatusText = (status: string) => {
+        switch (status) {
+            case 'completed': return 'Completado';
+            case 'pending': return 'Pendiente';
+            case 'cancelled': return 'Cancelado';
+            default: return status;
         }
     };
 
@@ -84,7 +137,7 @@ export default function DashboardPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Profile Card */}
-                    <Card className="bg-zinc-900/50 border-white/10">
+                    <Card className="bg-zinc-900/50 border-white/10 h-fit">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-white flex items-center gap-2">
                                 <User className="h-5 w-5 text-[#D4AF37]" /> Perfil
@@ -141,7 +194,7 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
 
-                    {/* Orders Card (Placeholder) */}
+                    {/* Orders Card */}
                     <Card className="bg-zinc-900/50 border-white/10 md:col-span-2">
                         <CardHeader>
                             <CardTitle className="text-white flex items-center gap-2">
@@ -149,13 +202,63 @@ export default function DashboardPage() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-center py-12 text-gray-500">
-                                <Package className="h-12 w-12 mx-auto mb-4 opacity-20" />
-                                <p>No tienes pedidos recientes.</p>
-                                <Button variant="link" className="text-[#D4AF37]" onClick={() => router.push('/catalog')}>
-                                    Explorar Catálogo
-                                </Button>
-                            </div>
+                            {orders.length === 0 ? (
+                                <div className="text-center py-12 text-gray-500">
+                                    <Package className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                                    <p>No tienes pedidos recientes.</p>
+                                    <Button variant="link" className="text-[#D4AF37]" onClick={() => router.push('/catalog')}>
+                                        Explorar Catálogo
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className="space-y-6">
+                                    {orders.map((order) => (
+                                        <div key={order.id} className="border border-white/5 rounded-lg p-4 bg-white/5">
+                                            <div className="flex flex-col md:flex-row justify-between mb-4 pb-4 border-b border-white/5 gap-4">
+                                                <div>
+                                                    <p className="text-sm text-gray-400">Pedido #{order.id}</p>
+                                                    <p className="text-xs text-gray-500">
+                                                        {new Date(order.created_at).toLocaleDateString('es-MX', {
+                                                            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                                                        })}
+                                                    </p>
+                                                </div>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex items-center gap-2 text-sm">
+                                                        {getStatusIcon(order.status)}
+                                                        <span className="capitalize text-gray-300">{getStatusText(order.status)}</span>
+                                                    </div>
+                                                    <p className="font-bold text-[#D4AF37]">
+                                                        ${Number(order.total).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-3">
+                                                {order.items.map((item) => (
+                                                    <div key={item.id} className="flex items-center gap-4">
+                                                        <div className="relative w-12 h-12 rounded bg-white/5 overflow-hidden flex-shrink-0">
+                                                            <Image
+                                                                src={item.image}
+                                                                alt={item.name}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <p className="text-sm text-white font-medium line-clamp-1">{item.name}</p>
+                                                            <p className="text-xs text-gray-500">Cant: {item.quantity}</p>
+                                                        </div>
+                                                        <p className="text-sm text-gray-300">
+                                                            ${Number(item.price).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
                 </div>

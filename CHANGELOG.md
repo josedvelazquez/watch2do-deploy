@@ -11,7 +11,7 @@ Todas las mejoras y cambios notables en el proyecto Watch2Do serán documentados
     -   Indicador de progreso visual animado entre pasos.
     -   Formulario de envío con validación.
     -   Selección de método de pago con iconos actualizados.
--   **Sistema de Diseño**: Estandarización de colores (Dorado `#D4AF37` y Negro) y tipografías (Serif/Sans) en toda la aplicación.
+-   **Sistema de Diseño**: Estandarización de colores (Dorado `#D4AF37` y Negro) y tipografías (**Playfair Display** para títulos y **Inter** para cuerpo) en toda la aplicación.
 
 ### Cambiado
 -   **Página del Carrito**: Reemplazada la sección de Newsletter por el carrusel de recomendaciones.

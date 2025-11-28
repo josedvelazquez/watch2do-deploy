@@ -105,7 +105,7 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
     -   Primario: Dorado (`#D4AF37`) - Usado en botones de acción, bordes activos y acentos.
     -   Fondo: Oscuro (Zinc-900/950) - Para una estética premium y elegante.
     -   Texto: Blanco/Gris claro para legibilidad sobre fondos oscuros.
--   **Tipografía**: Uso de fuentes Serif para títulos (elegancia) y Sans-serif para cuerpo (legibilidad).
+-   **Tipografía**: Uso de **Playfair Display** para títulos (elegancia) y **Inter** para cuerpo (legibilidad).
 -   **Componentes UI**: Botones, Inputs y Tarjetas estilizados consistentemente con efectos de hover y transiciones suaves.
 
 ## API Endpoints
