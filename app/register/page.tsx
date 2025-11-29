@@ -66,11 +66,11 @@ export default function RegisterPage() {
             <Navbar />
 
             <main className="flex-1 container mx-auto px-4 py-24 flex items-center justify-center">
-                <Card className="w-full max-w-md bg-zinc-900/50 border-white/10">
+                <Card className="w-full max-w-md bg-white/5 dark:bg-zinc-900/50 border-white/10 shadow-xl">
                     <CardContent className="p-8">
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl font-bold text-white font-serif mb-2">Crear Cuenta</h1>
-                            <p className="text-gray-400">Únete a Watch2Do hoy mismo</p>
+                            <h1 className="text-3xl font-bold text-[#1A1A1A] dark:text-white font-serif mb-2">Crear Cuenta</h1>
+                            <p className="text-[#9CA3AF]">Únete a Watch2Do hoy mismo</p>
                         </div>
 
                         {error && (
@@ -81,7 +81,7 @@ export default function RegisterPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <label htmlFor="name" className="text-sm font-medium text-gray-300">Nombre Completo</label>
+                                <label htmlFor="name" className="text-sm font-medium text-[#9CA3AF]">Nombre Completo</label>
                                 <div className="relative">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                                     <input
@@ -90,14 +90,14 @@ export default function RegisterPage() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                        className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         placeholder="Juan Pérez"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
+                                <label htmlFor="email" className="text-sm font-medium text-[#9CA3AF]">Email</label>
                                 <div className="relative">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                                     <input
@@ -106,14 +106,14 @@ export default function RegisterPage() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                        className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         placeholder="tu@email.com"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="password" className="text-sm font-medium text-gray-300">Contraseña</label>
+                                <label htmlFor="password" className="text-sm font-medium text-[#9CA3AF]">Contraseña</label>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                                     <input
@@ -122,14 +122,14 @@ export default function RegisterPage() {
                                         value={formData.password}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                        className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         placeholder="••••••••"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-300">Confirmar Contraseña</label>
+                                <label htmlFor="confirmPassword" className="text-sm font-medium text-[#9CA3AF]">Confirmar Contraseña</label>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                                     <input
@@ -138,13 +138,13 @@ export default function RegisterPage() {
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                        className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         placeholder="••••••••"
                                     />
                                 </div>
                             </div>
 
-                            <Button disabled={isLoading} className="w-full text-lg py-6 bg-[#D4AF37] hover:bg-[#B5952F] text-black font-bold disabled:opacity-50">
+                            <Button disabled={isLoading} className="w-full text-lg py-6 bg-[#D4AF37] hover:bg-[#B5952F] text-black dark:text-white font-bold disabled:opacity-50">
                                 {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <><span className="mr-2">Registrarse</span> <ArrowRight className="h-5 w-5" /></>}
                             </Button>
                         </form>
@@ -160,6 +160,6 @@ export default function RegisterPage() {
             </main>
 
             <Footer />
-        </div>
+        </div >
     );
 }

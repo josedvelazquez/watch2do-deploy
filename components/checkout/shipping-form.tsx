@@ -41,46 +41,46 @@ export function ShippingForm({ onContinue }: ShippingFormProps) {
     return (
         <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="space-y-2">
-                <h2 className="text-2xl font-serif font-bold text-white">Información de Envío</h2>
-                <p className="text-muted-foreground">Ingresa los detalles de destino para tu pedido.</p>
+                <h2 className="text-2xl font-serif font-bold text-black dark:text-white">Información de Envío</h2>
+                <p className="text-[#9CA3AF]">Ingresa los detalles de destino para tu pedido.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
+                <div className="space-y-2 text-[#9CA3AF]">
                     <Label htmlFor="firstName">Nombre</Label>
-                    <Input id="firstName" value={formData.firstName} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                    <Input id="firstName" value={formData.firstName} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 text-[#9CA3AF]">
                     <Label htmlFor="lastName">Apellido</Label>
-                    <Input id="lastName" value={formData.lastName} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                    <Input id="lastName" value={formData.lastName} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
                 </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 text-[#9CA3AF]">
                 <Label htmlFor="email">Correo Electrónico</Label>
-                <Input id="email" type="email" value={formData.email} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                <Input id="email" type="email" value={formData.email} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 text-[#9CA3AF]">
                 <Label htmlFor="address">Dirección</Label>
-                <Input id="address" value={formData.address} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                <Input id="address" value={formData.address} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#9CA3AF]">
                 <div className="space-y-2">
                     <Label htmlFor="city">Ciudad</Label>
-                    <Input id="city" value={formData.city} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                    <Input id="city" value={formData.city} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="zip">Código Postal</Label>
-                    <Input id="zip" value={formData.zip} onChange={handleChange} className="bg-white/5 border-white/10" required />
+                    <Input id="zip" value={formData.zip} onChange={handleChange} className="bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white focus:border-primary" required />
                 </div>
             </div>
 
             <div className="pt-4">
                 <Button
                     type="submit"
-                    className="w-full h-12 text-lg font-medium bg-[#D4AF37] text-black hover:bg-[#B59530] transition-all"
+                    className="w-full h-12 text-lg font-medium bg-[#D4AF37] text-black dark:text-white hover:bg-[#B59530] transition-all"
                 >
                     Continuar al Pago
                 </Button>

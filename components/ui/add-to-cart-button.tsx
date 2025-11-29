@@ -52,7 +52,7 @@ export function AddToCartButton({ productId, className, iconOnly = false }: AddT
             <Button
                 size="icon"
                 variant="ghost"
-                className={cn("rounded-full h-10 w-10 bg-white/10 hover:bg-[#D4AF37] hover:text-black text-white transition-colors", className)}
+                className={cn("rounded-full h-10 w-10 bg-[#D4AF37]/80 hover:bg-[#D4AF37]/80 hover:text-white text-black dark:hover:text-black dark:text-white transition-colors", className)}
                 onClick={handleAddToCart}
                 disabled={isLoading}
             >
@@ -64,7 +64,7 @@ export function AddToCartButton({ productId, className, iconOnly = false }: AddT
     return (
         <Button
             size="lg"
-            className={cn("w-full md:w-auto px-12 text-lg h-14", className)}
+            className={cn("w-full md:w-auto px-12 text-lg h-14 dark:hover:text-white dark:text-black", className)}
             onClick={handleAddToCart}
             disabled={isLoading}
         >

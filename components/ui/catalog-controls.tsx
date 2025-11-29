@@ -56,7 +56,7 @@ export function CatalogControls() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Buscar productos..."
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary/50 transition-colors"
+                    className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-lg py-3 pl-12 pr-4 text-[#9CA3AF] dark:text-white placeholder:text-gray-500 focus:outline-none focus:border-primary/50 transition-colors"
                 />
             </div>
 
@@ -64,11 +64,11 @@ export function CatalogControls() {
                 <select
                     value={sortValue}
                     onChange={handleSortChange}
-                    className="w-full h-[50px] bg-white/5 border border-white/10 rounded-lg px-4 text-white hover:border-[#D4AF37] focus:outline-none focus:border-primary/50 appearance-none cursor-pointer"
+                    className="w-full h-[50px] bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 text-black dark:text-white hover:border-[#D4AF37] focus:outline-none focus:border-primary/50 appearance-none cursor-pointer"
                 >
-                    <option value="" className="bg-zinc-900 text-white">Ordenar por</option>
-                    <option value="price_asc" className="bg-zinc-900 text-white">Precio: Menor a Mayor</option>
-                    <option value="price_desc" className="bg-zinc-900 text-white">Precio: Mayor a Menor</option>
+                    <option value="" className="bg-white dark:bg-zinc-900 text-black dark:text-white">Ordenar por</option>
+                    <option value="price_asc" className="bg-white dark:bg-zinc-900 text-black dark:text-white">Precio: Menor a Mayor</option>
+                    <option value="price_desc" className="bg-white dark:bg-zinc-900 text-black dark:text-white">Precio: Mayor a Menor</option>
                 </select>
             </div>
         </div>

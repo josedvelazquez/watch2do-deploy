@@ -31,8 +31,8 @@ export function CategoryFilter({ categories }: { categories: Category[] }) {
                 className={cn(
                     "px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
                     !currentCategory
-                        ? "bg-primary/10 border-primary text-primary"
-                        : "bg-white/5 border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
+                        ? "bg-primary/10 border-[#D4AF37] text-[#D4AF37]"
+                        : "bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-[#9CA3AF] hover:border-primary hover:text-primary dark:hover:border-white/30 dark:hover:text-white"
                 )}
             >
                 Todas
@@ -44,8 +44,8 @@ export function CategoryFilter({ categories }: { categories: Category[] }) {
                     className={cn(
                         "px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
                         currentCategory === cat.slug
-                            ? "bg-primary/10 border-primary text-primary"
-                            : "bg-white/5 border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
+                            ? "bg-primary/10 border-[#D4AF37] text-[#D4AF37]"
+                            : "bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-[#9CA3AF] hover:border-primary hover:text-primary dark:hover:border-white/30 dark:hover:text-white"
                     )}
                 >
                     {cat.name}

@@ -123,7 +123,7 @@ export default function CheckoutPage() {
                     {/* Progress Indicator */}
                     <div className="flex items-center justify-center mb-12 relative">
                         {/* Connecting Line Background */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-1 bg-zinc-800 rounded-full" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-1 bg-gray-200 dark:bg-zinc-800 rounded-full" />
 
                         {/* Connecting Line Progress */}
                         <div
@@ -136,11 +136,11 @@ export default function CheckoutPage() {
                             <div className="flex flex-col items-center gap-2">
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step === 'shipping' || step === 'payment' || step === 'card-details'
                                     ? 'bg-[#D4AF37] text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-110'
-                                    : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
+                                    : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500 border border-gray-200 dark:border-zinc-700'
                                     }`}>
                                     {step === 'payment' || step === 'card-details' ? <Check className="w-5 h-5" /> : '1'}
                                 </div>
-                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'shipping' ? 'text-[#D4AF37]' : 'text-zinc-500'
+                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'shipping' ? 'text-[#D4AF37]' : 'text-gray-400 dark:text-zinc-500'
                                     }`}>
                                     Envío
                                 </span>
@@ -150,11 +150,11 @@ export default function CheckoutPage() {
                             <div className="flex flex-col items-center gap-2">
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step === 'payment' || step === 'card-details'
                                     ? 'bg-[#D4AF37] text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-110'
-                                    : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
+                                    : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500 border border-gray-200 dark:border-zinc-700'
                                     }`}>
                                     2
                                 </div>
-                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'payment' || step === 'card-details' ? 'text-[#D4AF37]' : 'text-zinc-500'
+                                <span className={`text-sm font-medium transition-colors duration-300 ${step === 'payment' || step === 'card-details' ? 'text-[#D4AF37]' : 'text-gray-400 dark:text-zinc-500'
                                     }`}>
                                     Pago
                                 </span>
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Step Content */}
-                    <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-8 md:p-12 backdrop-blur-sm relative">
+                    <div className="bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-white/5 rounded-2xl p-8 md:p-12 backdrop-blur-sm relative shadow-xl dark:shadow-none">
                         {isProcessing && (
                             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-2xl">
                                 <div className="flex flex-col items-center gap-4">

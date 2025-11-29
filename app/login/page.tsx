@@ -59,11 +59,11 @@ function LoginForm() {
 
     return (
         <main className="flex-1 container mx-auto px-4 py-24 flex items-center justify-center">
-            <Card className="w-full max-w-md bg-zinc-900/50 border-white/10">
+            <Card className="w-full max-w-md bg-white/5 dark:bg-zinc-900/50 border-white/10 shadow-xl">
                 <CardContent className="p-8">
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-white font-serif mb-2">Bienvenido</h1>
-                        <p className="text-gray-400">Inicia sesión para continuar</p>
+                        <h1 className="text-3xl font-bold text-black dark:text-white font-serif mb-2">Bienvenido</h1>
+                        <p className="text-[#9CA3AF]">Inicia sesión para continuar</p>
                     </div>
 
                     {error && (
@@ -80,7 +80,7 @@ function LoginForm() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
+                            <label htmlFor="email" className="text-sm font-medium text-[#9CA3AF]">Email</label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                                 <input
@@ -89,7 +89,7 @@ function LoginForm() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                    className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                     placeholder="tu@email.com"
                                 />
                             </div>
@@ -97,7 +97,7 @@ function LoginForm() {
 
                         <div className="space-y-2">
                             <div className="flex justify-between items-center">
-                                <label htmlFor="password" className="text-sm font-medium text-gray-300">Contraseña</label>
+                                <label htmlFor="password" className="text-sm font-medium text-[#9CA3AF]">Contraseña</label>
                                 <Link href="#" className="text-xs text-primary hover:underline">¿Olvidaste tu contraseña?</Link>
                             </div>
                             <div className="relative">
@@ -108,18 +108,18 @@ function LoginForm() {
                                     value={formData.password}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                    className="w-full bg-white/5 border border-black/10 dark:border-white/10 rounded-md py-3 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                     placeholder="••••••••"
                                 />
                             </div>
                         </div>
 
-                        <Button disabled={isLoading} className="w-full text-lg py-6 bg-[#D4AF37] hover:bg-[#B5952F] text-black font-bold disabled:opacity-50">
+                        <Button disabled={isLoading} className="w-full text-lg py-6 bg-[#D4AF37] hover:bg-[#B5952F] text-black dark:text-white font-bold disabled:opacity-50">
                             {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <><span className="mr-2">Iniciar Sesión</span> <ArrowRight className="h-5 w-5" /></>}
                         </Button>
                     </form>
 
-                    <div className="mt-8 text-center text-sm text-gray-400">
+                    <div className="mt-8 text-center text-sm text-[#9CA3AF]">
                         ¿No tienes una cuenta?{" "}
                         <Link href="/register" className="text-primary hover:underline font-medium">
                             Regístrate aquí

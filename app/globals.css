@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @theme {
   --font-sans: var(--font-geist-sans);
@@ -6,6 +7,35 @@
 }
 
 :root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+
+  --primary: #d4af37;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+
+  --border: #a1a1a1;
+  --input: #a1a1a1;
+  --ring: #d4af37;
+
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+
+  --radius: 0.5rem;
+}
+
+.dark {
   --background: #0a0a0a;
   --foreground: #ededed;
 
@@ -24,6 +54,12 @@
   --border: #333333;
   --input: #333333;
   --ring: #d4af37;
+
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
 }
 
 body {

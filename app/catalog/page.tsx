@@ -119,10 +119,10 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                 {/* Header Section */}
                 <div className="flex flex-col items-center text-center mb-16 space-y-8">
                     <div className="space-y-4">
-                        <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight font-serif">
+                        <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tight font-serif">
                             Tu Tiempo, Tu Estilo
                         </h1>
-                        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+                        <p className="text-[#9CA3AF] text-lg md:text-xl max-w-2xl mx-auto">
                             Encuentra el proximo reloj que se ajuste a tu persona.
                         </p>
                     </div>
@@ -141,7 +141,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                 {/* Products Grid */}
                 {watches.length === 0 ? (
                     <div className="text-center py-20">
-                        <p className="text-gray-400 text-lg mb-6">No se encontraron productos que coincidan con tu búsqueda.</p>
+                        <p className="text-[#9CA3AF] text-lg mb-6">No se encontraron productos que coincidan con tu búsqueda.</p>
                         <Button asChild className="bg-[#D4AF37] hover:bg-[#B59530] text-black">
                             <Link href="/catalog">Ver todos los productos</Link>
                         </Button>
@@ -150,7 +150,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {watches.map((watch) => (
                             <Link key={watch.id} href={`/product/${watch.id}`} className="group h-full block">
-                                <Card className="border-white/5 bg-white/5 overflow-hidden hover:border-primary/50 transition-colors duration-300 h-full flex flex-col">
+                                <Card className="border-white/10 bg-white/5 overflow-hidden hover:border-primary/50 hover:shadow-xl duration-300 h-full flex flex-col">
                                     <CardContent className="p-0 relative aspect-square">
                                         <Image
                                             src={watch.image}
@@ -162,7 +162,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                                     <CardFooter className="flex flex-col items-start p-6 flex-1 justify-between">
                                         <div className="w-full">
                                             <div className="flex justify-between w-full items-center mb-2">
-                                                <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors">{watch.name}</h3>
+                                                <h3 className="text-lg font-semibold text-black dark:text-white group-hover:text-primary transition-colors">{watch.name}</h3>
                                             </div>
                                             <span className="text-primary font-bold block mb-4">${Number(watch.price).toLocaleString()}</span>
                                         </div>
