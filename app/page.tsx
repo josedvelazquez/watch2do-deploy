@@ -58,13 +58,13 @@ export default async function Home() {
             />
           </div>
           <div className="container mx-auto px-4 relative z-10 text-white">
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-serif">
+            <h1 className="text-[56px] leading-[64px] font-bold text-white font-serif">
               Hora de lujo <br /> en tu muñeca
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl">
+            <p className="mb-8 text-[#9CA3AF] max-w-2xl text-[16px] leading-[24px] font-inter"> <br />
               Descubre nuestra colección curada de relojes de lujo, diseñados para la precisión y la distinción.
             </p>
-            <Button size="lg" className="text-lg px-8 py-6" asChild>
+            <Button size="lg" className="text-lg px-8 py-6 border-b border-black/10 bg-black/50 backdrop-blur-md" asChild>
               <Link href="/catalog">Ver colección</Link>
             </Button>
           </div>
@@ -75,10 +75,10 @@ export default async function Home() {
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2">Colección Destacada</h2>
-                <p className="text-gray-400">Relojes favoritos para el coleccionista.</p>
+                <h2 className="text-3xl font-bold text-dark dark:text-white mb-2">Colección Destacada</h2>
+                <p className="text-[#9CA3AF]">Relojes favoritos para el coleccionista.</p>
               </div>
-              <Link href="/catalog" className="text-primary hover:text-primary/80 transition-colors">
+              <Link href="/catalog" className="inline-flex items-center text-[#9CA3AF] dark:hover:text-primary hover:text-black mb-8 transition-colors">
                 Ver Todo &rarr;
               </Link>
             </div>
@@ -97,10 +97,10 @@ export default async function Home() {
                     </CardContent>
                     <CardFooter className="flex flex-col items-start p-6 flex-1 justify-between">
                       <div className="w-full">
-                        <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors mb-1">{watch.name}</h3>
+                        <h3 className="text-lg font-semibold text-dark dark:text-white group-hover:text-primary dark:group-hover:text-primary/80 transition-colors mb-1">{watch.name}</h3>
                         <span className="text-primary font-bold block mb-4">${Number(watch.price).toLocaleString()}</span>
                       </div>
-                      <div className="w-full flex justify-end">
+                      <div className="w-full flex justify-end space-y-4 pt-4 border-t dark:border-white/10 border-black/20">
                         <AddToCartButton productId={watch.id} iconOnly />
                       </div>
                     </CardFooter>
@@ -112,28 +112,28 @@ export default async function Home() {
         </section>
 
         {/* Value Proposition */}
-        <section className="py-24 bg-zinc-900/50 border-y border-white/5">
+        <section className="py-24 bg-white/5 dark:bg-zinc-900/50 border-y dark:border-white/5 border-gray-300">
           <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
             <div className="space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
                 💎
               </div>
-              <h3 className="text-xl font-bold text-white">Materiales Premium</h3>
-              <p className="text-gray-400">Elaborado con cristal de zafiro, acero quirúrgico y cuero genuino.</p>
+              <h3 className="text-xl font-bold text-dark dark:text-white">Materiales Premium</h3>
+              <p className="text-[#9CA3AF]">Elaborado con cristal de zafiro, acero quirúrgico y cuero genuino.</p>
             </div>
             <div className="space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
                 🛡️
               </div>
-              <h3 className="text-xl font-bold text-white">Garantía de Vida</h3>
-              <p className="text-gray-400">Nos comprometemos con la calidad de nuestros relojes con una garantía completa.</p>
+              <h3 className="text-xl font-bold text-dark dark:text-white">Garantía de Vida</h3>
+              <p className="text-[#9CA3AF]">Nos comprometemos con la calidad de nuestros relojes con una garantía completa.</p>
             </div>
             <div className="space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-primary text-2xl">
                 🚚
               </div>
-              <h3 className="text-xl font-bold text-white">Envío Gratis</h3>
-              <p className="text-gray-400">Envío gratis en todos los pedidos.</p>
+              <h3 className="text-xl font-bold text-dark dark:text-white">Envío Gratis</h3>
+              <p className="text-[#9CA3AF]">Envío gratis en todos los pedidos.</p>
             </div>
           </div>
         </section>

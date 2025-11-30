@@ -13,8 +13,8 @@ export default function ContactPage() {
             <main className="flex-1 container mx-auto px-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-16 space-y-4">
-                    <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white font-serif">Contáctanos</h1>
-                    <p className="text-[#9CA3AF] max-w-2xl mx-auto">
+                    <h1 className="text-[56px] leading-[64px] font-bold text-black dark:text-white font-serif">Contáctanos</h1>
+                    <p className="text-[#9CA3AF] max-w-2xl mx-auto text-[16px] leading-[24px] font-inter">
                         Estamos aquí para ayudarte. Ponte en contacto con nosotros a través de cualquiera de nuestros canales de comunicación y te responderemos lo antes posible.
                     </p>
                 </div>

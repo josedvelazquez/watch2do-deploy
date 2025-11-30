@@ -64,7 +64,7 @@ export function AddToCartButton({ productId, className, iconOnly = false }: AddT
     return (
         <Button
             size="lg"
-            className={cn("w-full md:w-auto px-12 text-lg h-14 dark:hover:text-white dark:text-black", className)}
+            className={cn("w-full md:w-auto px-12 text-lg bg-[#D4AF37] hover:bg-[#B59530] text-black dark:text-white", className)}
             onClick={handleAddToCart}
             disabled={isLoading}
         >

@@ -44,8 +44,8 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="text-center space-y-2 mb-8">
-                <h2 className="text-3xl font-serif font-bold text-white">Pago con Tarjeta</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-3xl font-serif font-bold text-black dark:text-white">Pago con Tarjeta</h2>
+                <p className="text-[#9CA3AF]">
                     Ingresa los datos de tu tarjeta para completar la compra de ${amount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                 </p>
             </div>
@@ -59,7 +59,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                             value={formData.cardNumber}
                             onChange={handleChange}
                             placeholder="0000 0000 0000 0000"
-                            className="bg-white/5 border-white/10 pl-10"
+                            className="bg-white/5 border border-black/10 dark:border-white/10 text-gray-500 pl-10"
                             required
                         />
                         <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -73,7 +73,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                         value={formData.cardName}
                         onChange={handleChange}
                         placeholder="COMO APARECE EN LA TARJETA"
-                        className="bg-white/5 border-white/10 uppercase"
+                        className="bg-white/5 border border-black/10 dark:border-white/10 text-gray-500 uppercase"
                         required
                     />
                 </div>
@@ -86,7 +86,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                             value={formData.expiry}
                             onChange={handleChange}
                             placeholder="MM/AA"
-                            className="bg-white/5 border-white/10"
+                            className="bg-white/5 border border-black/10 dark:border-white/10 text-gray-500"
                             required
                         />
                     </div>
@@ -98,7 +98,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                                 value={formData.cvv}
                                 onChange={handleChange}
                                 placeholder="123"
-                                className="bg-white/5 border-white/10 pl-10"
+                                className="bg-white/5 border border-black/10 dark:border-white/10 text-gray-500 pl-10"
                                 required
                             />
                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -109,7 +109,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                 <div className="pt-4 space-y-4">
                     <Button
                         type="submit"
-                        className="w-full h-12 text-lg font-medium bg-[#D4AF37] text-black hover:bg-[#B59530] transition-all"
+                        className="w-full h-12 text-lg font-medium bg-[#D4AF37] text-black dark:text-white hover:bg-[#B59530] transition-all"
                     >
                         Pagar ${amount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                     </Button>
@@ -117,7 +117,7 @@ export function CreditCardForm({ amount, onPay, onBack }: CreditCardFormProps) {
                         type="button"
                         onClick={onBack}
                         variant="ghost"
-                        className="w-full text-white hover:text-primary hover:bg-white/5"
+                        className="w-full text-black dark:text-white hover:text-primary bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10"
                     >
                         Volver a Métodos de Pago
                     </Button>

@@ -69,16 +69,16 @@ export function RecommendedProducts({ currentItems = [] }: RecommendedProductsPr
     if (products.length === 0) return null;
 
     return (
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-black/10 dark:border-white/10">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-bold text-white">También te podría interesar</h2>
+                    <h2 className="text-[32px] font-serif font-bold text-black dark:text-white">También te podría interesar</h2>
                     <div className="flex gap-2">
                         <Button
                             variant="outline"
                             size="icon"
                             onClick={() => scroll('left')}
-                            className="h-8 w-8 rounded-full border-white/10 bg-white/5 hover:bg-white/10 hover:text-white"
+                            className="h-8 w-8 rounded-full border-black/10 dark:border-white/10 bg-white/5 hover:bg-black/10 hover:text-black dark:hover:text-white"
                         >
                             <ChevronLeft className="h-4 w-4" />
                         </Button>
@@ -86,7 +86,7 @@ export function RecommendedProducts({ currentItems = [] }: RecommendedProductsPr
                             variant="outline"
                             size="icon"
                             onClick={() => scroll('right')}
-                            className="h-8 w-8 rounded-full border-white/10 bg-white/5 hover:bg-white/10 hover:text-white"
+                            className="h-8 w-8 rounded-full border-black/10 dark:border-white/10 bg-white/5 hover:bg-black/10 hover:text-black dark:hover:text-white"
                         >
                             <ChevronRight className="h-4 w-4" />
                         </Button>
@@ -112,10 +112,10 @@ export function RecommendedProducts({ currentItems = [] }: RecommendedProductsPr
                                     </CardContent>
                                     <CardFooter className="flex flex-col items-start p-4 flex-1 justify-between">
                                         <div className="w-full">
-                                            <h3 className="text-base font-semibold text-white group-hover:text-primary transition-colors mb-1 truncate">{watch.name}</h3>
+                                            <h3 className="text-base font-semibold text-black dark:text-white transition-colors mb-1 truncate">{watch.name}</h3>
                                             <span className="text-primary font-bold block mb-4">${Number(watch.price).toLocaleString()}</span>
                                         </div>
-                                        <div className="w-full flex justify-end">
+                                        <div className="w-full flex justify-end space-y-4 pt-4 border-t dark:border-white/10 border-black/20">
                                             <AddToCartButton productId={watch.id} iconOnly />
                                         </div>
                                     </CardFooter>

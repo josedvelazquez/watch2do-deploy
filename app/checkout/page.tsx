@@ -94,16 +94,16 @@ export default function CheckoutPage() {
             <div className="min-h-screen bg-background flex flex-col">
                 <Navbar />
                 <main className="flex-1 container mx-auto px-4 py-12 flex items-center justify-center">
-                    <div className="max-w-md w-full bg-zinc-900/50 border border-white/5 rounded-2xl p-8 text-center backdrop-blur-sm animate-in fade-in zoom-in duration-500">
+                    <div className="max-w-md w-full bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-white/5 rounded-2xl p-8 text-center backdrop-blur-sm animate-in fade-in zoom-in duration-500 shadow-xl dark:shadow-none">
                         <div className="w-20 h-20 rounded-full bg-[#D4AF37]/20 flex items-center justify-center mx-auto mb-6">
                             <Check className="w-10 h-10 text-[#D4AF37]" />
                         </div>
-                        <h2 className="text-3xl font-serif font-bold text-white mb-4">¡Gracias por tu compra!</h2>
-                        <p className="text-gray-400 mb-8">
+                        <h2 className="text-3xl font-serif font-bold text-black dark:text-white mb-4">¡Gracias por tu compra!</h2>
+                        <p className="text-[#9CA3AF] mb-8">
                             Tu pedido ha sido procesado exitosamente. Hemos enviado un correo de confirmación a {shippingData?.email}.
                         </p>
                         <Link href="/">
-                            <Button className="w-full bg-[#D4AF37] hover:bg-[#B59530] text-black font-bold h-12">
+                            <Button className="w-full bg-[#D4AF37] hover:bg-[#B59530] text-black dark:text-white font-bold h-12">
                                 Volver al Inicio
                             </Button>
                         </Link>

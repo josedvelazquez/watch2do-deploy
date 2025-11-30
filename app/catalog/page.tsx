@@ -119,10 +119,10 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                 {/* Header Section */}
                 <div className="flex flex-col items-center text-center mb-16 space-y-8">
                     <div className="space-y-4">
-                        <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tight font-serif">
+                        <h1 className="text-[56px] leading-[64px] font-bold text-black dark:text-white font-serif">
                             Tu Tiempo, Tu Estilo
                         </h1>
-                        <p className="text-[#9CA3AF] text-lg md:text-xl max-w-2xl mx-auto">
+                        <p className="text-[#9CA3AF] max-w-2xl mx-auto text-[16px] leading-[24px] font-inter">
                             Encuentra el proximo reloj que se ajuste a tu persona.
                         </p>
                     </div>
@@ -142,7 +142,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                 {watches.length === 0 ? (
                     <div className="text-center py-20">
                         <p className="text-[#9CA3AF] text-lg mb-6">No se encontraron productos que coincidan con tu búsqueda.</p>
-                        <Button asChild className="bg-[#D4AF37] hover:bg-[#B59530] text-black">
+                        <Button asChild className="bg-[#D4AF37] hover:bg-[#B59530] text-black dark:text-white">
                             <Link href="/catalog">Ver todos los productos</Link>
                         </Button>
                     </div>
@@ -166,7 +166,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
                                             </div>
                                             <span className="text-primary font-bold block mb-4">${Number(watch.price).toLocaleString()}</span>
                                         </div>
-                                        <div className="w-full flex justify-end">
+                                        <div className="w-full flex justify-end space-y-4 pt-4 border-t dark:border-white/10 border-black/20">
                                             <AddToCartButton productId={watch.id} iconOnly />
                                         </div>
                                     </CardFooter>

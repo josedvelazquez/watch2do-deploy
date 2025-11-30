@@ -89,7 +89,7 @@ export default function CartPage() {
                 <Link href="/catalog" className="inline-flex items-center text-gray-400 hover:text-primary mb-8 transition-colors">
                     <ArrowLeft className="mr-2 h-4 w-4" /> Seguir comprando
                 </Link>
-                <h1 className="text-4xl font-bold text-white mb-8">Tu Carrito de Compras</h1>
+                <h1 className="text-[42px] font-serif font-bold text-black dark:text-white mb-8">Tu Carrito de Compras</h1>
 
                 {items.length === 0 ? (
                     <div className="text-center py-20">
@@ -102,27 +102,27 @@ export default function CartPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         <div className="lg:col-span-2 space-y-6">
                             {items.map((item) => (
-                                <div key={item.id} className="flex gap-6 p-6 bg-white/5 rounded-lg border border-white/10">
+                                <div key={item.id} className="flex gap-6 p-6 bg-white/5 rounded-lg border border-black/10 dark:border-white/10 shadow-lg dark:shadow-none">
                                     <div className="relative w-24 h-24 bg-white/5 rounded overflow-hidden flex-shrink-0">
                                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                                     </div>
                                     <div className="flex-1 flex justify-between">
                                         <div>
-                                            <h3 className="text-xl font-semibold text-white">{item.name}</h3>
+                                            <h3 className="text-xl font-semibold text-black dark:text-white">{item.name}</h3>
                                             <p className="text-gray-400 text-sm">ID: {item.product_id}</p>
                                             <div className="mt-4 flex items-center gap-4">
-                                                <div className="flex items-center border border-white/10 rounded">
+                                                <div className="flex items-center border border-black/20 dark:border-white/20 rounded shadow-lg">
                                                     <button
                                                         onClick={() => updateQuantity(item.product_id, -1)}
                                                         disabled={item.quantity <= 1}
-                                                        className="px-3 py-1 text-gray-400 hover:text-white disabled:opacity-50"
+                                                        className="px-3 py-1 text-[#9CA3AF] hover:text-black dark:hover:text-white"
                                                     >
                                                         <Minus className="h-3 w-3" />
                                                     </button>
-                                                    <span className="px-2 text-white min-w-[1.5rem] text-center">{item.quantity}</span>
+                                                    <span className="px-2 text-[#9CA3AF] min-w-[1.5rem] text-center">{item.quantity}</span>
                                                     <button
                                                         onClick={() => updateQuantity(item.product_id, 1)}
-                                                        className="px-3 py-1 text-gray-400 hover:text-white"
+                                                        className="px-3 py-1 text-[#9CA3AF] hover:text-black dark:hover:text-white"
                                                     >
                                                         <Plus className="h-3 w-3" />
                                                     </button>
@@ -130,10 +130,10 @@ export default function CartPage() {
                                             </div>
                                         </div>
                                         <div className="flex flex-col justify-between items-end">
-                                            <span className="text-lg font-bold text-white">${Number(item.price).toLocaleString()}</span>
+                                            <span className="text-lg font-bold text-black dark:text-white">${Number(item.price).toLocaleString()}</span>
                                             <button
                                                 onClick={() => removeItem(item.id)}
-                                                className="text-gray-500 hover:text-red-500 transition-colors"
+                                                className="text-red-500 hover:scale-110 transition-colors"
                                             >
                                                 <Trash2 className="h-5 w-5" />
                                             </button>
@@ -145,27 +145,27 @@ export default function CartPage() {
 
                         {/* Summary */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white/5 rounded-lg border border-white/10 p-6 sticky top-24">
-                                <h2 className="text-xl font-bold text-white mb-6">Resumen del Pedido</h2>
+                            <div className="bg-white/5 rounded-lg border border-black/10 dark:border-white/10 p-6 sticky top-24 shadow-lg dark:shadow-none">
+                                <h2 className="text-xl font-bold text-black dark:text-white mb-6">Resumen del Pedido</h2>
                                 <div className="space-y-4 mb-6">
-                                    <div className="flex justify-between text-gray-400">
+                                    <div className="flex justify-between text-[#9CA3AF]">
                                         <span>Subtotal</span>
-                                        <span className="text-white">${subtotal.toLocaleString()}</span>
+                                        <span className="text-black dark:text-white">${subtotal.toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between text-gray-400">
+                                    <div className="flex justify-between text-[#9CA3AF]">
                                         <span>Envío</span>
-                                        <span className="text-white">Gratis</span>
+                                        <span className="text-black dark:text-white">Gratis</span>
                                     </div>
-                                    <div className="flex justify-between text-gray-400">
+                                    <div className="flex justify-between text-[#9CA3AF]">
                                         <span>Impuestos (8%)</span>
-                                        <span className="text-white">${tax.toLocaleString()}</span>
+                                        <span className="text-black dark:text-white">${tax.toLocaleString()}</span>
                                     </div>
-                                    <div className="border-t border-white/10 pt-4 flex justify-between text-lg font-bold text-white">
+                                    <div className="border-t border-black/10 dark:border-white/10 pt-4 flex justify-between text-lg font-bold text-black dark:text-white">
                                         <span>Total</span>
                                         <span className="text-[#D4AF37]">${total.toLocaleString()}</span>
                                     </div>
                                 </div>
-                                <Button className="w-full h-12 text-lg bg-[#D4AF37] hover:bg-[#B59530] text-black" asChild>
+                                <Button className="w-full h-12 text-lg bg-[#D4AF37] hover:bg-[#B59530] text-black dark:text-white" asChild>
                                     <Link href="/checkout">Proceder al Pago</Link>
                                 </Button>
                             </div>

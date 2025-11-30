@@ -127,31 +127,31 @@ export default function DashboardPage() {
             <main className="flex-1 container mx-auto px-4 py-12">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-white font-serif">Mi Cuenta</h1>
-                        <p className="text-gray-400">Bienvenido de nuevo, {user.name}</p>
+                        <h1 className="text-3xl font-bold text-black dark:text-white font-serif">Mi Cuenta</h1>
+                        <p className="text-[#9CA3AF] max-w-2xl mx-auto text-[16px] leading-[24px] font-inter">Bienvenido de nuevo, {user.name}</p>
                     </div>
-                    <Button onClick={handleLogout} variant="outline" className="border-white/10 text-white hover:bg-white/5 hover:text-red-400">
+                    <Button onClick={handleLogout} variant="outline" className="border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 dark:hover:text-red-500 hover:text-red-500 shadow-sm">
                         <LogOut className="mr-2 h-4 w-4" /> Cerrar Sesión
                     </Button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Profile Card */}
-                    <Card className="bg-zinc-900/50 border-white/10 h-fit">
+                    <Card className="h-full bg-white dark:bg-zinc-900/50 border-gray-200 dark:border-white/10 shadow-xl dark:shadow-none">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-white flex items-center gap-2">
+                            <CardTitle className="text-black dark:text-white flex items-center gap-2">
                                 <User className="h-5 w-5 text-[#D4AF37]" /> Perfil
                             </CardTitle>
                             {!isEditing ? (
-                                <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-white">
+                                <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} className="text-[#9CA3AF]">
                                     <Edit className="h-4 w-4" />
                                 </Button>
                             ) : (
                                 <div className="flex gap-1">
-                                    <Button variant="ghost" size="icon" onClick={handleSaveProfile} disabled={isSaving} className="text-green-400 hover:text-green-300">
+                                    <Button variant="ghost" size="icon" onClick={handleSaveProfile} disabled={isSaving} className="text-green-400 hover:text-green-500">
                                         {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                                     </Button>
-                                    <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)} className="text-red-400 hover:text-red-300">
+                                    <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)} className="text-red-400 hover:text-red-500">
                                         <X className="h-4 w-4" />
                                     </Button>
                                 </div>
@@ -161,33 +161,33 @@ export default function DashboardPage() {
                             {isEditing ? (
                                 <>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-500">Nombre</label>
+                                        <label className="text-sm text-[#9CA3AF]">Nombre</label>
                                         <input
                                             type="text"
                                             value={editForm.name}
                                             onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
+                                            className="w-full bg-white/5 border border-black/10 rounded px-3 py-2 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-500">Email</label>
+                                        <label className="text-sm text-[#9CA3AF]">Email</label>
                                         <input
                                             type="email"
                                             value={editForm.email}
                                             onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
+                                            className="w-full bg-white/5 border border-black/10 rounded px-3 py-2 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
                                         />
                                     </div>
                                 </>
                             ) : (
                                 <>
                                     <div>
-                                        <p className="text-sm text-gray-500">Nombre</p>
-                                        <p className="text-white font-medium">{user.name}</p>
+                                        <p className="text-sm text-[#9CA3AF]">Nombre</p>
+                                        <p className="text-black dark:text-white font-medium">{user.name}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-500">Email</p>
-                                        <p className="text-white font-medium">{user.email}</p>
+                                        <p className="text-sm text-[#9CA3AF]">Email</p>
+                                        <p className="text-black dark:text-white font-medium">{user.email}</p>
                                     </div>
                                 </>
                             )}
@@ -195,9 +195,9 @@ export default function DashboardPage() {
                     </Card>
 
                     {/* Orders Card */}
-                    <Card className="bg-zinc-900/50 border-white/10 md:col-span-2">
+                    <Card className="h-full bg-white dark:bg-zinc-900/50 border-gray-200 dark:border-white/10 shadow-xl dark:shadow-none md:col-span-2">
                         <CardHeader>
-                            <CardTitle className="text-white flex items-center gap-2">
+                            <CardTitle className="text-black dark:text-white flex items-center gap-2">
                                 <Package className="h-5 w-5 text-[#D4AF37]" /> Mis Pedidos
                             </CardTitle>
                         </CardHeader>
@@ -213,11 +213,11 @@ export default function DashboardPage() {
                             ) : (
                                 <div className="space-y-6">
                                     {orders.map((order) => (
-                                        <div key={order.id} className="border border-white/5 rounded-lg p-4 bg-white/5">
-                                            <div className="flex flex-col md:flex-row justify-between mb-4 pb-4 border-b border-white/5 gap-4">
+                                        <div key={order.id} className="border border-gray-200 dark:border-white/10 rounded-lg p-4 bg-white/5 shadow-lg">
+                                            <div className="flex flex-col md:flex-row justify-between pb-5 border-b border-white/5 gap-4">
                                                 <div>
-                                                    <p className="text-sm text-gray-400">Pedido #{order.id}</p>
-                                                    <p className="text-xs text-gray-500">
+                                                    <p className="text-sm text-[#9CA3AF]">Pedido #{order.id}</p>
+                                                    <p className="text-xs text-[#9CA3AF]">
                                                         {new Date(order.created_at).toLocaleDateString('es-MX', {
                                                             year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
                                                         })}
@@ -226,7 +226,7 @@ export default function DashboardPage() {
                                                 <div className="flex items-center gap-4">
                                                     <div className="flex items-center gap-2 text-sm">
                                                         {getStatusIcon(order.status)}
-                                                        <span className="capitalize text-gray-300">{getStatusText(order.status)}</span>
+                                                        <span className="capitalize text-[#4A4A4A] dark:text-white">{getStatusText(order.status)}</span>
                                                     </div>
                                                     <p className="font-bold text-[#D4AF37]">
                                                         ${Number(order.total).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
@@ -234,7 +234,7 @@ export default function DashboardPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-3">
+                                            <div className="space-y-3 pt-4 border-t dark:border-white/10 border-black/20">
                                                 {order.items.map((item) => (
                                                     <div key={item.id} className="flex items-center gap-4">
                                                         <div className="relative w-12 h-12 rounded bg-white/5 overflow-hidden flex-shrink-0">
@@ -246,10 +246,10 @@ export default function DashboardPage() {
                                                             />
                                                         </div>
                                                         <div className="flex-1">
-                                                            <p className="text-sm text-white font-medium line-clamp-1">{item.name}</p>
-                                                            <p className="text-xs text-gray-500">Cant: {item.quantity}</p>
+                                                            <p className="text-sm text-black dark:text-white font-medium line-clamp-1">{item.name}</p>
+                                                            <p className="text-xs text-[#9CA3AF]">Cant: {item.quantity}</p>
                                                         </div>
-                                                        <p className="text-sm text-gray-300">
+                                                        <p className="text-sm text-[#9CA3AF]">
                                                             ${Number(item.price).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                                                         </p>
                                                     </div>

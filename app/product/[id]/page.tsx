@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     const watch = await getWatch(id);
 
     if (!watch) {
-        return <div className="text-white text-center py-20">Product not found</div>;
+        return <div className="text-white text-center py-20">Producto no encontrado</div>;
     }
 
     return (
@@ -57,7 +57,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <Navbar />
 
             <main className="flex-1 container mx-auto px-4 py-12">
-                <Link href="/catalog" className="inline-flex items-center text-gray-400 hover:text-primary mb-8 transition-colors">
+                <Link href="/catalog" className="inline-flex items-center text-[#9CA3AF] dark:hover:text-primary hover:text-black mb-8 transition-colors">
                     <ArrowLeft className="mr-2 h-4 w-4" /> Volver al Catalogo
                 </Link>
 
@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     {/* Product Info */}
                     <div className="space-y-8">
                         <div>
-                            <h1 className="text-4xl font-bold text-white mb-2">{watch.name}</h1>
+                            <h1 className="text-[42px] font-bold text-black dark:text-white mb-2 font-serif">{watch.name}</h1>
                             <div className="flex items-center gap-4">
                                 <span className="text-2xl text-primary font-bold">${Number(watch.price).toLocaleString()}</span>
                                 <div className="flex items-center text-yellow-500 text-sm">
@@ -99,21 +99,21 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                                     <Star className="fill-current h-4 w-4" />
                                     <Star className="fill-current h-4 w-4" />
                                     <Star className="fill-current h-4 w-4" />
-                                    <span className="text-gray-400 ml-2">(24 reseñas)</span>
+                                    <span className="text-[#6B7280] ml-2">(24 reseñas)</span>
                                 </div>
                             </div>
                         </div>
 
-                        <p className="text-gray-300 leading-relaxed text-lg">
+                        <p className="text-[#9CA3AF] max-w-2xl mx-auto text-[16px] leading-[24px] font-inter">
                             {watch.description}
                         </p>
 
-                        <div className="space-y-4 pt-4 border-t border-white/10">
-                            <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <div className="space-y-4 pt-4 border-t dark:border-white/10 border-black/20">
+                            <div className="flex items-center gap-3 text-sm text-[#6B7280]">
                                 <Truck className="h-5 w-5 text-primary" />
                                 <span>Envío asegurado gratuito a todo el mundo</span>
                             </div>
-                            <div className="flex items-center gap-3 text-sm text-gray-400">
+                            <div className="flex items-center gap-3 text-sm text-[#6B7280]">
                                 <Shield className="h-5 w-5 text-primary" />
                                 <span>Garantía internacional de 5 años</span>
                             </div>
