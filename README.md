@@ -35,12 +35,13 @@ Aplicación de comercio electrónico moderna construida con Next.js 15, Tailwind
         1.  `database/init.sql` (Crea tablas base, categorías y productos iniciales)
         2.  `database/users.sql` (Crea tabla de usuarios)
         3.  `database/cart.sql` (Crea tabla de carrito)
+        4.  `database/orders.sql` (Tabla de órdenes)
 
         *Ejemplo por línea de comandos:*
         ```bash
         mysql -u tu_usuario -p watch2do < database/init.sql
-        mysql -u tu_usuario -p watch2do < database/users.sql
-        mysql -u tu_usuario -p watch2do < database/cart.sql
+
+        # ... ejecutar el resto de scripts en orden
         ```
 
 4.  **Variables de Entorno:**
@@ -100,13 +101,14 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 -   **Recomendaciones Inteligentes**: Carrusel de productos recomendados en el carrito basado en las categorías de los artículos seleccionados.
 -   **Checkout Optimizado**: Proceso de compra en pasos (Envío -> Pago) con validación de formularios e indicador de progreso visual.
 
-### 🎨 Sistema de Diseño (Dark Mode)
+### 🎨 Sistema de Diseño (Light & Dark Mode)
+-   **Temas**: Soporte completo para modo claro y oscuro, con detección automática de preferencia del sistema.
 -   **Paleta de Colores**:
     -   Primario: Dorado (`#D4AF37`) - Usado en botones de acción, bordes activos y acentos.
-    -   Fondo: Oscuro (Zinc-900/950) - Para una estética premium y elegante.
-    -   Texto: Blanco/Gris claro para legibilidad sobre fondos oscuros.
+    -   Fondo: Adaptable (Blanco en Light, Zinc-900/950 en Dark).
+    -   Texto: Adaptable (Negro en Light, Blanco/Gris en Dark) para máxima legibilidad.
 -   **Tipografía**: Uso de **Playfair Display** para títulos (elegancia) y **Inter** para cuerpo (legibilidad).
--   **Componentes UI**: Botones, Inputs y Tarjetas estilizados consistentemente con efectos de hover y transiciones suaves.
+-   **Componentes UI**: Botones, Inputs y Tarjetas estilizados consistentemente con efectos de hover y transiciones suaves en ambos temas.
 
 ## API Endpoints
 
