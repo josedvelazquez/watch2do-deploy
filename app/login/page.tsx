@@ -49,8 +49,12 @@ function LoginForm() {
                 throw new Error(data.message || "Error al iniciar sesión");
             }
 
-            // Force a hard refresh to update Navbar state (since we're using cookies)
-            window.location.href = "/";
+            // Redirect based on role
+            if (data.user?.role === 1) {
+                window.location.href = "/admin";
+            } else {
+                window.location.href = "/dashboard";
+            }
         } catch (err: any) {
             setError(err.message);
             setIsLoading(false);

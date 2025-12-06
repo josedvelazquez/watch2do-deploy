@@ -15,21 +15,21 @@ export async function GET() {
             return NextResponse.json({ user: null }, { status: 200 });
         }
 
-        const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number; email: string; name: string };
+        const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number; email: string; name: string; role?: number };
         if (!decoded.id && decoded.userId) {
             decoded.id = decoded.userId;
         }
-        const user = decoded as { id: number; email: string; name: string };
+        const user = decoded as { id: number; email: string; name: string; role: number };
 
         try {
             // Try to fetch fresh user data
-            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email FROM users WHERE id = ?', [user.id]);
+            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email, role FROM users WHERE id = ?', [user.id]);
 
             if (users.length > 0) {
                 return NextResponse.json({ user: users[0] }, { status: 200 });
             }
         } catch (dbError) {
-            console.error('Database fetch error in /api/auth/me:', dbError);
+            console.error('Error al obtener datos del usuario:', dbError);
             // Fallback to token data if DB fails
         }
 
@@ -46,7 +46,7 @@ export async function PUT(request: Request) {
         const token = cookieStore.get('auth_token');
 
         if (!token) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+            return NextResponse.json({ message: 'No autorizado' }, { status: 401 });
         }
 
         const decoded = jwt.verify(token.value, JWT_SECRET) as { id?: number; userId?: number };
@@ -57,14 +57,14 @@ export async function PUT(request: Request) {
         const { name, email } = await request.json();
 
         if (!name || !email) {
-            return NextResponse.json({ message: 'Name and email are required' }, { status: 400 });
+            return NextResponse.json({ message: 'Nombre y correo electrónico son requeridos' }, { status: 400 });
         }
 
         await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, user.id]);
 
-        return NextResponse.json({ message: 'Profile updated successfully', user: { name, email } }, { status: 200 });
+        return NextResponse.json({ message: 'Perfil actualizado correctamente', user: { name, email } }, { status: 200 });
     } catch (error) {
         console.error('Update profile error:', error);
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ message: 'Error interno del servidor' }, { status: 500 });
     }
 }

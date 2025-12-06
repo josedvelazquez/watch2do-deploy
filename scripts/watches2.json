@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Luxury Stainless Steel Watch",
+        "price": 1999,
+        "image": "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg",
+        "description": "Reloj de acero inoxidable con diseño sobrio y elegante, ideal para ocasiones formales.",
+        "category": "men"
+    },
+    {
+        "name": "Gold Crystal Face Watch",
+        "price": 3599,
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+        "description": "Reloj dorado con detalles premium y cristal reforzado.",
+        "category": "women"
+    },
+    {
+        "name": "Black Sapphire Luxury Watch",
+        "price": 3999,
+        "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+        "description": "Reloj negro con cristal de zafiro y diseño exclusivo.",
+        "category": "men"
+    },
+    {
+        "name": "Rose Gold Elite Mesh",
+        "price": 2899,
+        "image": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3",
+        "description": "Reloj elegante con malla metálica en oro rosa.",
+        "category": "women"
+    },
+    {
+        "name": "Midnight Blue Luxury",
+        "price": 3199,
+        "image": "https://images.unsplash.com/photo-1524592094714-0f0654e20314",
+        "description": "Reloj azul profundo con diseño elegante y contemporáneo.",
+        "category": "men"
+    },
+    {
+        "name": "Classic Watch On Wrist Close-up",
+        "price": 3199,
+        "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+        "description": "Reloj clásico visto en muñeca — ideal para mostrar uso real del producto.",
+        "category": "men"
+    }
+]

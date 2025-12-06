@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
         // Generate JWT
         const token = jwt.sign(
-            { id: user.id, email: user.email, name: user.name },
+            { id: user.id, email: user.email, name: user.name, role: user.role !== undefined ? user.role : 0 },
             JWT_SECRET,
             { expiresIn: '1d' }
         );
@@ -46,7 +46,14 @@ export async function POST(request: Request) {
             path: '/',
         });
 
-        const response = NextResponse.json({ message: 'Inicio de sesión exitoso', user: { name: user.name, email: user.email } }, { status: 200 });
+        const response = NextResponse.json({
+            message: 'Inicio de sesión exitoso',
+            user: {
+                name: user.name,
+                email: user.email,
+                role: user.role // TinyInt returns as number
+            }
+        }, { status: 200 });
         response.headers.set('Set-Cookie', cookie);
 
         return response;
