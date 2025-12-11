@@ -17,7 +17,7 @@ async function seed() {
 
         // Read watches from JSON
         const watchesData = JSON.parse(
-            await fs.readFile(path.join(__dirname, 'watches.json'), 'utf8')
+            await fs.readFile(path.join(__dirname, 'watches2.json'), 'utf8')
         );
 
         // Ensure categories exist

@@ -2,43 +2,113 @@
     {
         "name": "Luxury Stainless Steel Watch",
         "price": 1999,
-        "image": "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg",
+        "image": "/images/watch9.jpeg",
         "description": "Reloj de acero inoxidable con diseño sobrio y elegante, ideal para ocasiones formales.",
         "category": "men"
     },
     {
         "name": "Gold Crystal Face Watch",
         "price": 3599,
-        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+        "image": "/images/watch10.jpg",
         "description": "Reloj dorado con detalles premium y cristal reforzado.",
         "category": "women"
     },
     {
         "name": "Black Sapphire Luxury Watch",
         "price": 3999,
-        "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+        "image": "/images/watch11.jpg",
         "description": "Reloj negro con cristal de zafiro y diseño exclusivo.",
         "category": "men"
     },
     {
         "name": "Rose Gold Elite Mesh",
         "price": 2899,
-        "image": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3",
+        "image": "/images/watch12.jpg",
         "description": "Reloj elegante con malla metálica en oro rosa.",
         "category": "women"
     },
     {
         "name": "Midnight Blue Luxury",
         "price": 3199,
-        "image": "https://images.unsplash.com/photo-1524592094714-0f0654e20314",
+        "image": "/images/watch13.jpg",
         "description": "Reloj azul profundo con diseño elegante y contemporáneo.",
         "category": "men"
     },
     {
         "name": "Classic Watch On Wrist Close-up",
         "price": 3199,
-        "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+        "image": "/images/watch14.jpg",
         "description": "Reloj clásico visto en muñeca — ideal para mostrar uso real del producto.",
         "category": "men"
+    },
+    {
+        "name": "Silver Link Bracelet Analog Watch",
+        "price": 3499,
+        "image": "/images/watch15.jpg",
+        "description": "Reloj analógico con eslabones metálicos plateados, diseño elegante.",
+        "category": "unisex"
+    },
+    {
+        "name": "G-Shock",
+        "price": 3299,
+        "image": "/images/watch16.jpg",
+        "description": "Reloj de muñeca con estética moderna en fotografía de estilo premium.",
+        "category": "unisex"
+    },
+    {
+        "name": "Black Dial Premium Wristwatch",
+        "price": 3599,
+        "image": "/images/watch17.jpg",
+        "description": "Reloj con correa metálica, sobrio y sofisticado.",
+        "category": "men"
+    },
+    {
+        "name": "Luxury Watch On Hand Close-up",
+        "price": 3399,
+        "image": "/images/watch18.jpg",
+        "description": "Detalle de reloj de muñeca, perfecto para catálogo minimalista y elegante.",
+        "category": "limited-edition"
+    },
+    {
+        "name": "Metallic Watch On Black Background",
+        "price": 3299,
+        "image": "/images/watch19.jpg",
+        "description": "Reloj metálico sobre fondo negro — estilo moderno y premium.",
+        "category": "men"
+    },
+    {
+        "name": "Wristwatch Minimal Silver Dial",
+        "price": 2899,
+        "image": "/images/watch20.jpg",
+        "description": "Diseño minimalista con esfera plateada — versátil y elegante.",
+        "category": "limited-edition"
+    },
+    {
+        "name": "Elegant Watch On Wrist Fashion Shot",
+        "price": 3199,
+        "image": "/images/watch21.jpg",
+        "description": "Reloj elegante usando estética de moda.",
+        "category": "unisex"
+    },
+    {
+        "name": "Black Dial Luxury Watch Close-up",
+        "price": 3599,
+        "image": "/images/watch22.jpg",
+        "description": "Reloj con esfera negra y correa oscura, diseño sobrio y elegante.",
+        "category": "men"
+    },
+    {
+        "name": "Minimalist Silver Watch Close-up",
+        "price": 2899,
+        "image": "/images/watch23.jpg",
+        "description": "Reloj minimalista con acabado plateado, ideal para vestimenta elegante o casual refinada.",
+        "category": "unisex"
+    },
+    {
+        "name": "Minimalist Silver Watch Close-up",
+        "price": 2899,
+        "image": "/images/watch24.jpg",
+        "description": "Reloj minimalista con acabado plateado, ideal para vestimenta elegante o casual refinada.",
+        "category": "limited-edition"
     }
 ]
