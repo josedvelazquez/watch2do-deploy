@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import pool from '@/lib/db';
-import { RowDataPacket } from 'mysql2';
+import { supabase } from '@/lib/supabase';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -30,14 +29,36 @@ export async function GET(request: Request) {
     }
 
     try {
-        const [rows] = await pool.query<RowDataPacket[]>(`
-            SELECT ci.id, ci.quantity, w.id as product_id, w.name, w.price, w.image, w.category_id
-            FROM cart_items ci
-            JOIN watches w ON ci.product_id = w.id
-            WHERE ci.user_id = ?
-        `, [user.id]);
+        const { data: items, error } = await supabase
+            .from('cart_items')
+            .select(`
+                id,
+                quantity,
+                product_id,
+                watches (
+                    id,
+                    name,
+                    price,
+                    image,
+                    category_id
+                )
+            `)
+            .eq('user_id', user.id);
 
-        return NextResponse.json({ items: rows }, { status: 200 });
+        if (error) throw error;
+
+        // Flatten shape to match previous API
+        const formattedItems = items.map((item: any) => ({
+            id: item.id,
+            quantity: item.quantity,
+            product_id: item.product_id,
+            name: item.watches.name,
+            price: item.watches.price,
+            image: item.watches.image,
+            category_id: item.watches.category_id
+        }));
+
+        return NextResponse.json({ items: formattedItems }, { status: 200 });
     } catch (error) {
         console.error('Fetch cart error:', error);
         return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
@@ -57,24 +78,24 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: 'Product ID is required' }, { status: 400 });
         }
 
-        // Check if item exists
-        const [existing] = await pool.query<RowDataPacket[]>(
-            'SELECT id, quantity FROM cart_items WHERE user_id = ? AND product_id = ?',
-            [user.id, productId]
-        );
+        // Upsert approach (Supabase handles logic if unique constraint exists on user_id, product_id)
+        // Check if exists first for simplicity to match previous increment logic
+        const { data: existing } = await supabase
+            .from('cart_items')
+            .select('id, quantity')
+            .eq('user_id', user.id)
+            .eq('product_id', productId)
+            .single();
 
-        if (existing.length > 0) {
-            // Update quantity
-            await pool.query(
-                'UPDATE cart_items SET quantity = quantity + ? WHERE id = ?',
-                [quantity, existing[0].id]
-            );
+        if (existing) {
+            await supabase
+                .from('cart_items')
+                .update({ quantity: existing.quantity + quantity })
+                .eq('id', existing.id);
         } else {
-            // Insert new item
-            await pool.query(
-                'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)',
-                [user.id, productId, quantity]
-            );
+            await supabase
+                .from('cart_items')
+                .insert({ user_id: user.id, product_id: productId, quantity });
         }
 
         return NextResponse.json({ message: 'Item added to cart' }, { status: 200 });
@@ -94,13 +115,14 @@ export async function DELETE(request: Request) {
         const { searchParams } = new URL(request.url);
         const itemId = searchParams.get('id');
 
+        let query = supabase.from('cart_items').delete().eq('user_id', user.id);
+
         if (itemId) {
-            // Remove specific item
-            await pool.query('DELETE FROM cart_items WHERE id = ? AND user_id = ?', [itemId, user.id]);
-        } else {
-            // Clear cart
-            await pool.query('DELETE FROM cart_items WHERE user_id = ?', [user.id]);
+            query = query.eq('id', itemId);
         }
+
+        const { error } = await query;
+        if (error) throw error;
 
         return NextResponse.json({ message: 'Cart updated' }, { status: 200 });
     } catch (error) {

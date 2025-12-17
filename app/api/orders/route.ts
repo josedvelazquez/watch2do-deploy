@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
-import { RowDataPacket } from "mysql2";
+import { supabase } from "@/lib/supabase";
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -30,28 +29,43 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Fetch orders
-        const [orders] = await pool.query<RowDataPacket[]>(
-            `SELECT id, total, status, created_at, payment_method 
-             FROM orders 
-             WHERE user_id = ? 
-             ORDER BY created_at DESC`,
-            [user.id]
-        );
+        // Fetch orders and items
+        const { data: orders, error } = await supabase
+            .from('orders')
+            .select(`
+                id,
+                total,
+                status,
+                created_at,
+                payment_method,
+                order_items (
+                    id,
+                    quantity,
+                    price,
+                    watches (
+                        name,
+                        image
+                    )
+                )
+            `)
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false });
 
-        // Fetch items for each order
-        const ordersWithItems = await Promise.all(orders.map(async (order) => {
-            const [items] = await pool.query<RowDataPacket[]>(
-                `SELECT oi.id, oi.quantity, oi.price, w.name, w.image 
-                 FROM order_items oi
-                 JOIN watches w ON oi.product_id = w.id
-                 WHERE oi.order_id = ?`,
-                [order.id]
-            );
-            return { ...order, items };
+        if (error) throw error;
+
+        // Formatted to match expected interface
+        const formattedOrders = orders.map((order: any) => ({
+            ...order,
+            items: order.order_items.map((item: any) => ({
+                id: item.id,
+                quantity: item.quantity,
+                price: item.price,
+                name: item.watches?.name,
+                image: item.watches?.image
+            }))
         }));
 
-        return NextResponse.json({ orders: ordersWithItems });
+        return NextResponse.json({ orders: formattedOrders });
 
     } catch (error) {
         console.error("Fetch orders error:", error);

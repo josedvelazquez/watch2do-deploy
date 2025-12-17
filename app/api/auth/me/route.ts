@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import pool from '@/lib/db';
-import { RowDataPacket } from 'mysql2';
+import { supabase } from '@/lib/supabase';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -23,10 +22,14 @@ export async function GET() {
 
         try {
             // Try to fetch fresh user data
-            const [users] = await pool.query<RowDataPacket[]>('SELECT id, name, email, role FROM users WHERE id = ?', [user.id]);
+            const { data: dbUser } = await supabase
+                .from('users')
+                .select('id, name, email, role')
+                .eq('id', user.id)
+                .single();
 
-            if (users.length > 0) {
-                return NextResponse.json({ user: users[0] }, { status: 200 });
+            if (dbUser) {
+                return NextResponse.json({ user: dbUser }, { status: 200 });
             }
         } catch (dbError) {
             console.error('Error al obtener datos del usuario:', dbError);
@@ -60,7 +63,14 @@ export async function PUT(request: Request) {
             return NextResponse.json({ message: 'Nombre y correo electrónico son requeridos' }, { status: 400 });
         }
 
-        await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, user.id]);
+        const { error } = await supabase
+            .from('users')
+            .update({ name, email })
+            .eq('id', user.id);
+
+        if (error) {
+            throw error;
+        }
 
         return NextResponse.json({ message: 'Perfil actualizado correctamente', user: { name, email } }, { status: 200 });
     } catch (error) {

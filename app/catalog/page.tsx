@@ -10,10 +10,9 @@ import { AddToCartButton } from "@/components/ui/add-to-cart-button";
 import { CatalogControls } from "@/components/ui/catalog-controls";
 import { Suspense } from "react";
 
-import pool from "@/lib/db";
-import { RowDataPacket } from "mysql2";
+import { supabase } from "@/lib/supabase";
 
-interface Watch extends RowDataPacket {
+interface Watch {
     id: number;
     name: string;
     price: number;
@@ -22,49 +21,49 @@ interface Watch extends RowDataPacket {
     category_slug: string;
 }
 
-interface Category extends RowDataPacket {
+interface Category {
     id: number;
     name: string;
     slug: string;
 }
 
 async function getWatches(categorySlug?: string, search?: string, sort?: string) {
-    try {
-        let query = `
-            SELECT w.*, c.name as category_name, c.slug as category_slug 
-            FROM watches w 
-            LEFT JOIN categories c ON w.category_id = c.id
-        `;
-        const params: any[] = [];
-        const conditions: string[] = [];
+    let query = supabase
+        .from('watches')
+        .select(`
+            *,
+            categories!inner (
+                name,
+                slug
+            )
+        `);
 
-        if (categorySlug) {
-            conditions.push("c.slug = ?");
-            params.push(categorySlug);
-        }
+    if (categorySlug) {
+        query = query.eq('categories.slug', categorySlug);
+    }
 
-        if (search) {
-            conditions.push("(w.name LIKE ? OR w.description LIKE ?)");
-            params.push(`%${search}%`, `%${search}%`);
-        }
+    if (search) {
+        query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    }
 
-        if (conditions.length > 0) {
-            query += " WHERE " + conditions.join(" AND ");
-        }
+    // Default sort
+    let orderColumn = 'id';
+    let orderAscending = false;
 
-        if (sort === 'price_asc') {
-            query += " ORDER BY w.price ASC";
-        } else if (sort === 'price_desc') {
-            query += " ORDER BY w.price DESC";
-        } else {
-            query += " ORDER BY w.id DESC"; // Default sort
-        }
+    if (sort === 'price_asc') {
+        orderColumn = 'price';
+        orderAscending = true;
+    } else if (sort === 'price_desc') {
+        orderColumn = 'price';
+        orderAscending = false;
+    }
 
-        const [rows] = await pool.query<Watch[]>(query, params);
-        return rows;
-    } catch (error) {
-        console.warn("conexión fallida, usando datos de prueba:", error);
-        console.log("usando datos de prueba");
+    query = query.order(orderColumn, { ascending: orderAscending });
+
+    const { data, error } = await query;
+
+    if (error) {
+        console.warn("Supabase connection failed, using mock data:", error);
         let watches = [
             { id: 1, name: "Chronos Silver", price: 1299, image: "/images/watch1.png", category_name: "Men", category_slug: "men" },
             { id: 2, name: "Midnight Leather", price: 899, image: "/images/watch2.png", category_name: "Men", category_slug: "men" },
@@ -91,19 +90,28 @@ async function getWatches(categorySlug?: string, search?: string, sort?: string)
 
         return watches;
     }
+
+    return data.map((watch: any) => ({
+        ...watch,
+        category_name: watch.categories?.name,
+        category_slug: watch.categories?.slug
+    })) as Watch[];
 }
 
 async function getCategories() {
-    try {
-        const [rows] = await pool.query<Category[]>("SELECT * FROM categories");
-        return rows;
-    } catch (error) {
+    const { data, error } = await supabase
+        .from('categories')
+        .select('*');
+
+    if (error) {
         return [
             { id: 1, name: "Men", slug: "men" },
             { id: 2, name: "Women", slug: "women" },
             { id: 3, name: "Unisex", slug: "unisex" },
         ] as Category[];
     }
+
+    return data as Category[];
 }
 
 export default async function CatalogPage({ searchParams }: { searchParams: Promise<{ category?: string, q?: string, sort?: string }> }) {

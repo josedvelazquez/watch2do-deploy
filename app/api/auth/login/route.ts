@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { supabase } from '@/lib/supabase';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { RowDataPacket } from 'mysql2';
 import { serialize } from 'cookie';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -16,13 +15,15 @@ export async function POST(request: Request) {
         }
 
         // Find user
-        const [users] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [email]);
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single();
 
-        if (users.length === 0) {
+        if (error || !user) {
             return NextResponse.json({ message: 'Credenciales inválidas' }, { status: 401 });
         }
-
-        const user = users[0];
 
         // Verify password
         const isValidPassword = await bcrypt.compare(password, user.password);
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
             user: {
                 name: user.name,
                 email: user.email,
-                role: user.role // TinyInt returns as number
+                role: user.role
             }
         }, { status: 200 });
         response.headers.set('Set-Cookie', cookie);

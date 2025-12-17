@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
-import { RowDataPacket } from 'mysql2';
+import { supabase } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -26,16 +25,20 @@ export async function GET() {
     }
 
     try {
-        const [users] = await pool.query<RowDataPacket[]>('SELECT COUNT(*) as count FROM users');
-        const [orders] = await pool.query<RowDataPacket[]>('SELECT COUNT(*) as count FROM orders');
-        const [revenue] = await pool.query<RowDataPacket[]>('SELECT SUM(total) as total FROM orders WHERE status != "cancelled"');
-        const [products] = await pool.query<RowDataPacket[]>('SELECT COUNT(*) as count FROM watches');
+        const { count: usersCount } = await supabase.from('users').select('*', { count: 'exact', head: true });
+        const { count: ordersCount } = await supabase.from('orders').select('*', { count: 'exact', head: true });
+
+        // Sum revenue (Supabase doesn't have direct SUM in client without RPC, but we can do a simple workaround or better: fetch all totals and sum in memory for now, or just assume we have RPC. For this small scale, fetch totals is fine)
+        const { data: orders } = await supabase.from('orders').select('total').neq('status', 'cancelled');
+        const revenue = orders ? orders.reduce((acc, order) => acc + Number(order.total), 0) : 0;
+
+        const { count: productsCount } = await supabase.from('watches').select('*', { count: 'exact', head: true });
 
         return NextResponse.json({
-            users: users[0].count,
-            orders: orders[0].count,
-            revenue: revenue[0].total || 0,
-            products: products[0].count
+            users: usersCount || 0,
+            orders: ordersCount || 0,
+            revenue: revenue,
+            products: productsCount || 0
         });
     } catch (error) {
         console.error("Error al obtener estadísticas:", error);

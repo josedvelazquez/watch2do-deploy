@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
-import { RowDataPacket, ResultSetHeader } from "mysql2";
+import { supabase } from "@/lib/supabase";
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -40,49 +39,18 @@ export async function POST(request: Request) {
         // Calculate total
         const total = items.reduce((acc: number, item: any) => acc + (Number(item.price) * item.quantity), 0);
 
-        // Start transaction
-        const connection = await pool.getConnection();
-        await connection.beginTransaction();
+        // Call Supabase RPC
+        const { data: orderId, error } = await supabase.rpc('create_order', {
+            p_user_id: user.id,
+            p_total: total,
+            p_shipping_info: shippingData,
+            p_payment_method: paymentMethod,
+            p_items: items
+        });
 
-        try {
-            // Insert Order
-            const [orderResult] = await connection.query<ResultSetHeader>(
-                `INSERT INTO orders (user_id, total, status, shipping_info, payment_method) VALUES (?, ?, ?, ?, ?)`,
-                [user.id, total, 'completed', JSON.stringify(shippingData), paymentMethod]
-            );
+        if (error) throw error;
 
-            const orderId = orderResult.insertId;
-
-            // Insert Order Items
-            const orderItemsValues = items.map((item: any) => [
-                orderId,
-                item.product_id,
-                item.quantity,
-                item.price
-            ]);
-
-            await connection.query(
-                `INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ?`,
-                [orderItemsValues]
-            );
-
-            // Clear Cart
-            await connection.query(
-                `DELETE FROM cart_items WHERE user_id = ?`,
-                [user.id]
-            );
-
-            // Commit transaction
-            await connection.commit();
-            connection.release();
-
-            return NextResponse.json({ success: true, orderId });
-
-        } catch (error) {
-            await connection.rollback();
-            connection.release();
-            throw error;
-        }
+        return NextResponse.json({ success: true, orderId });
 
     } catch (error) {
         console.error("Checkout error:", error);

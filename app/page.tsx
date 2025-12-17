@@ -7,10 +7,9 @@ import { Footer } from "@/components/ui/footer";
 import { Newsletter } from "@/components/ui/newsletter";
 import { AddToCartButton } from "@/components/ui/add-to-cart-button";
 
-import pool from "@/lib/db";
-import { RowDataPacket } from "mysql2";
+import { supabase } from "@/lib/supabase";
 
-interface Watch extends RowDataPacket {
+interface Watch {
   id: number;
   name: string;
   price: number;
@@ -19,16 +18,18 @@ interface Watch extends RowDataPacket {
 }
 
 async function getFeaturedWatches() {
-  try {
-    const [rows] = await pool.query<Watch[]>(`
-        SELECT w.*, c.name as category_name 
-        FROM watches w 
-        LEFT JOIN categories c ON w.category_id = c.id 
-        LIMIT 4
-    `);
-    return rows;
-  } catch (error) {
-    console.warn("Database connection failed, using mock data:", error);
+  const { data, error } = await supabase
+    .from('watches')
+    .select(`
+      *,
+      categories (
+        name
+      )
+    `)
+    .limit(4);
+
+  if (error) {
+    console.warn("Supabase query failed, using mock data:", error);
     return [
       { id: 1, name: "Chronos Silver", price: 1299, image: "/images/watch1.png", category_name: "Men" },
       { id: 2, name: "Midnight Leather", price: 899, image: "/images/watch2.png", category_name: "Men" },
@@ -36,6 +37,12 @@ async function getFeaturedWatches() {
       { id: 4, name: "Aviator Gold", price: 2100, image: "/images/hero.png", category_name: "Men" },
     ] as Watch[];
   }
+
+  // Map the response to flatten category_name
+  return data.map((watch: any) => ({
+    ...watch,
+    category_name: watch.categories?.name
+  })) as Watch[];
 }
 
 export default async function Home() {

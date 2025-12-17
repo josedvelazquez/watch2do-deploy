@@ -1,0 +1,10 @@
+# Env Example
+# Rename this file to .env.local and fill in your values
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+
+# Authentication
+# You can generate a random secret with `openssl rand -base64 32`
+JWT_SECRET=your-secure-jwt-secret

@@ -7,10 +7,9 @@ import { ArrowLeft, Star, Truck, Shield } from "lucide-react";
 import { Newsletter } from "@/components/ui/newsletter";
 import { AddToCartButton } from "@/components/ui/add-to-cart-button";
 
-import pool from "@/lib/db";
-import { RowDataPacket } from "mysql2";
+import { supabase } from "@/lib/supabase";
 
-interface Watch extends RowDataPacket {
+interface Watch {
     id: number;
     name: string;
     price: number;
@@ -20,16 +19,19 @@ interface Watch extends RowDataPacket {
 }
 
 async function getWatch(id: string) {
-    try {
-        const [rows] = await pool.query<Watch[]>(`
-            SELECT w.*, c.name as category_name 
-            FROM watches w 
-            LEFT JOIN categories c ON w.category_id = c.id 
-            WHERE w.id = ?
-        `, [id]);
-        return rows[0] || null;
-    } catch (error) {
-        console.warn("Conexión fallida a la base de datos, usando datos simulados:", error);
+    const { data, error } = await supabase
+        .from('watches')
+        .select(`
+            *,
+            categories (
+                name
+            )
+        `)
+        .eq('id', id)
+        .single();
+
+    if (error) {
+        console.warn("Supabase query failed, using mock data:", error);
         const watches = [
             { id: 1, name: "Chronos Silver", price: 1299, image: "/images/watch1.png", description: "A masterpiece of engineering, the Chronos Silver features a precision automatic movement housed in a surgical-grade stainless steel case.", category_name: "Men" },
             { id: 2, name: "Midnight Leather", price: 899, image: "/images/watch2.png", description: "Elegant and understated, the Midnight Leather combines a minimalist black dial with a premium genuine leather strap for ultimate comfort.", category_name: "Men" },
@@ -42,6 +44,11 @@ async function getWatch(id: string) {
         ] as Watch[];
         return watches.find(w => w.id.toString() === id) || watches[0];
     }
+
+    return {
+        ...data,
+        category_name: data.categories?.name
+    } as Watch;
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {

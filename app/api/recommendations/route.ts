@@ -1,78 +1,65 @@
-import { NextResponse } from "next/server";
-import pool from "@/lib/db";
-import { RowDataPacket } from "mysql2";
-
-interface Watch extends RowDataPacket {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-    category_name: string;
-}
+import { NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const categoryIds = searchParams.get("category_ids")?.split(",").map(Number) || [];
-    const excludeIds = searchParams.get("exclude_ids")?.split(",").map(Number) || [];
-
     try {
-        let query = `
-            SELECT w.*, c.name as category_name 
-            FROM watches w 
-            LEFT JOIN categories c ON w.category_id = c.id 
-            WHERE 1=1
-        `;
-        const params: any[] = [];
+        const { searchParams } = new URL(request.url);
+        const categoryId = searchParams.get('category_id');
+        const currentWatchId = searchParams.get('current_watch_id');
 
-        // If we have categories, prioritize them, but for now let's just get random or specific ones
-        // If we have categories, we could filter by them OR just get random ones if none match
-        if (categoryIds.length > 0) {
-            query += ` AND w.category_id IN (?)`;
-            params.push(categoryIds);
+        let query = supabase
+            .from('watches')
+            .select(`
+                *,
+                categories (
+                    name,
+                    slug
+                )
+            `)
+            .limit(4);
+
+        if (categoryId) {
+            query = query.eq('category_id', categoryId);
         }
 
-        if (excludeIds.length > 0) {
-            query += ` AND w.id NOT IN (?)`;
-            params.push(excludeIds);
+        if (currentWatchId) {
+            query = query.neq('id', currentWatchId);
         }
 
-        query += ` ORDER BY RAND() LIMIT 4`;
+        let { data: rows, error } = await query;
 
-        const [rows] = await pool.query<Watch[]>(query, params);
+        if (error) throw error;
 
-        // If we didn't get enough recommendations (e.g. filtered too much), try getting random ones excluding the current items
-        if (rows.length < 4) {
-            let fallbackQuery = `
-                SELECT w.*, c.name as category_name 
-                FROM watches w 
-                LEFT JOIN categories c ON w.category_id = c.id 
-                WHERE 1=1
-            `;
-            const fallbackParams: any[] = [];
+        // Fallback if not enough recommendations
+        if (!rows || rows.length < 4) {
+            const { data: fallbackRows } = await supabase
+                .from('watches')
+                .select(`
+                    *,
+                    categories (
+                        name,
+                        slug
+                    )
+                `)
+                .neq('id', currentWatchId || -1)
+                .limit(4 - (rows?.length || 0));
 
-            if (excludeIds.length > 0) {
-                fallbackQuery += ` AND w.id NOT IN (?)`;
-                fallbackParams.push(excludeIds);
+            if (fallbackRows) {
+                rows = [...(rows || []), ...fallbackRows];
             }
-
-            // Exclude already found rows
-            const foundIds = rows.map(r => r.id);
-            if (foundIds.length > 0) {
-                fallbackQuery += ` AND w.id NOT IN (?)`;
-                fallbackParams.push(foundIds);
-            }
-
-            fallbackQuery += ` ORDER BY RAND() LIMIT ?`;
-            fallbackParams.push(4 - rows.length);
-
-            const [fallbackRows] = await pool.query<Watch[]>(fallbackQuery, fallbackParams);
-            rows.push(...fallbackRows);
         }
 
-        return NextResponse.json(rows);
+        // Format
+        const formattedRows = rows?.map((watch: any) => ({
+            ...watch,
+            category_name: watch.categories?.name,
+            category_slug: watch.categories?.slug
+        })) || [];
 
+
+        return NextResponse.json(formattedRows);
     } catch (error) {
-        console.warn("Database connection failed or query error, using mock data:", error);
+        console.error('Recommendations error:', error);
 
         // Mock data fallback
         const mockWatches = [
@@ -83,9 +70,6 @@ export async function GET(request: Request) {
             { id: 105, name: "Ocean Master", price: 1850, image: "/images/watch1.png", category_name: "Men" },
         ];
 
-        // Filter out excluded IDs from mock data
-        const filteredMock = mockWatches.filter(w => !excludeIds.includes(w.id)).slice(0, 4);
-
-        return NextResponse.json(filteredMock);
+        return NextResponse.json(mockWatches.slice(0, 4));
     }
 }

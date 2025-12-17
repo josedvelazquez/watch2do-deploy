@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { supabase } from '@/lib/supabase';
 import bcrypt from 'bcryptjs';
-import { RowDataPacket } from 'mysql2';
 
 export async function POST(request: Request) {
     try {
@@ -12,8 +11,13 @@ export async function POST(request: Request) {
         }
 
         // Check if user already exists
-        const [existingUsers] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [email]);
-        if (existingUsers.length > 0) {
+        const { data: existingUser } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single();
+
+        if (existingUser) {
             return NextResponse.json({ message: 'El usuario ya existe' }, { status: 409 });
         }
 
@@ -21,7 +25,16 @@ export async function POST(request: Request) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert user
-        await pool.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
+        const { error } = await supabase
+            .from('users')
+            .insert([
+                { name, email, password: hashedPassword }
+            ]);
+
+        if (error) {
+            console.error('Registration error (supabase):', error);
+            return NextResponse.json({ message: 'Error al registrar usuario' }, { status: 500 });
+        }
 
         return NextResponse.json({ message: 'Usuario creado exitosamente' }, { status: 201 });
     } catch (error) {
