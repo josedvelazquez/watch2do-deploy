@@ -30,6 +30,11 @@ export function ShippingForm({ onContinue }: ShippingFormProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
+
+        if (id === 'zip' && !/^\d*$/.test(value)) {
+            return;
+        }
+
         setFormData(prev => ({ ...prev, [id]: value }));
     };
 

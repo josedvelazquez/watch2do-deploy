@@ -69,8 +69,6 @@ export function Footer() {
                         <h4 className="text-black dark:text-white font-bold mb-6 font-serif">Empresa</h4>
                         <ul className="space-y-4 text-sm text-[#9CA3AF]">
                             <li><Link href="/about" className="hover:text-primary transition-colors">Sobre Nosotros</Link></li>
-                            <li><Link href="/team" className="hover:text-primary transition-colors">Nuestro Equipo</Link></li>
-                            <li><Link href="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
                             <li><Link href="/press" className="hover:text-primary transition-colors">Prensa</Link></li>
                         </ul>
@@ -80,10 +78,9 @@ export function Footer() {
                     <div>
                         <h4 className="text-black dark:text-white font-bold mb-6 font-serif">Soporte</h4>
                         <ul className="space-y-4 text-sm text-[#9CA3AF]">
-                            <li><Link href="/help" className="hover:text-primary transition-colors">Centro de Ayuda</Link></li>
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contacto</Link></li>
-                            <li><Link href="/warranty" className="hover:text-primary transition-colors">Garantías</Link></li>
-                            <li><Link href="/shipping" className="hover:text-primary transition-colors">Envíos y Devoluciones</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary transition-colors">Garantías</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary transition-colors">Envíos y Devoluciones</Link></li>
                         </ul>
                     </div>
 
@@ -93,7 +90,7 @@ export function Footer() {
                         <ul className="space-y-6 text-sm text-[#9CA3AF]">
                             <li className="flex items-start gap-3">
                                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                                <span className="text-[#9CA3AF]">+52 999 999 9999</span>
+                                <span className="text-[#9CA3AF]">+52 662 123 4567</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <Mail className="h-5 w-5 text-primary shrink-0" />
